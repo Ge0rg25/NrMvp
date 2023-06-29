@@ -1,2 +1,4 @@
-package ru.netrunner.coursesmvp.errors;public class CourseAlreadyExistsError {
+package ru.netrunner.coursesmvp.errors;
+
+public class CourseAlreadyExistsError extends RuntimeException{
 }

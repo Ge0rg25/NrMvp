@@ -1,8 +1,10 @@
 package ru.netrunner.coursesmvp.dto.rules;
 
 
-public class CourseRules {
+public class ValidationRules {
     public interface Create{}
     public interface Update{}
     public interface Delete{}
+
+    public interface FindAll{}
 }

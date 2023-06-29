@@ -2,11 +2,11 @@ package ru.netrunner.coursesmvp.models;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+
+import java.util.UUID;
 
 
 @Data
@@ -16,24 +16,24 @@ import lombok.experimental.FieldDefaults;
 public class LessonEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String id;
 
-    @Column
+    @Column(length = 50)
     String title;
 
-    @Column
+    @Column(length = 1000)
     String description;
 
-    @Column
+    @Column(length = 7000)
     String body;
 
-    @NotNull
-    @NotBlank
-    @Column
-    String accessCode;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false)
+    UUID accessCode;
 
-    @Column
+    @Column(nullable = false)
     Boolean enabled;
+
 
 }

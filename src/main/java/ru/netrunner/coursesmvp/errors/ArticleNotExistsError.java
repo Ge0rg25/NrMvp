@@ -1,4 +1,4 @@
 package ru.netrunner.coursesmvp.errors;
 
-public class CourseNotExistsError extends RuntimeException{
+public class ArticleNotExistsError extends RuntimeException{
 }

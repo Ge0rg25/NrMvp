@@ -11,6 +11,10 @@ java {
     sourceCompatibility = '17'
 }
 
+ext {
+    set('keycloakVersion', "21.1.1")
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -32,8 +36,18 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation "org.keycloak:keycloak-admin-client:${keycloakVersion}" // адаптер для работы с KC
+    implementation 'org.modelmapper:modelmapper:3.1.1'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.keycloak.bom:keycloak-adapter-bom:${keycloakVersion}"
+    }
 }

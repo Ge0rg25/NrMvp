@@ -1,2 +1,17 @@
-package ru.netrunner.coursesmvp.configuration;public class BeanConfig {
+package ru.netrunner.coursesmvp.configuration;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class BeanConfig {
+
+
+    @Bean
+    public ModelMapper getModelMapper(){
+        return new ModelMapper();
+    }
+
+
 }
