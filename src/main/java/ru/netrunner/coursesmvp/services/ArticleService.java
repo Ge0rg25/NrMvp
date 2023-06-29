@@ -1,6 +1,5 @@
 package ru.netrunner.coursesmvp.services;
 
-import jakarta.persistence.ManyToMany;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.objects.ArticleDto;
-import ru.netrunner.coursesmvp.errors.ArticleAlreadyExistsError;
-import ru.netrunner.coursesmvp.errors.ArticleNotExistsError;
-import ru.netrunner.coursesmvp.errors.CourseNotExistsError;
+import ru.netrunner.coursesmvp.errors.common.ArticleAlreadyExistsError;
+import ru.netrunner.coursesmvp.errors.common.ArticleNotExistsError;
+import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
 import ru.netrunner.coursesmvp.models.ArticleEntity;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.repositories.ArticleRepository;

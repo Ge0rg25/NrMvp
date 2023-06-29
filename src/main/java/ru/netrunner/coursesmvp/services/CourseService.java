@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.objects.CourseDto;
-import ru.netrunner.coursesmvp.errors.CourseAlreadyExistsError;
-import ru.netrunner.coursesmvp.errors.CourseNotExistsError;
+import ru.netrunner.coursesmvp.errors.common.CourseAlreadyExistsError;
+import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.repositories.CourseRepository;
 
