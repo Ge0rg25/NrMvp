@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -34,6 +32,10 @@ public class CourseEntity {
 
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
+    @ManyToMany
+    @JoinTable(
+            name = "course_user",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     List<UserEntity> users = new ArrayList<>();
 }

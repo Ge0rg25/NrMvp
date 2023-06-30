@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.netrunner.coursesmvp.dto.objects.CourseDto;
-import ru.netrunner.coursesmvp.dto.rules.ValidationRules;
-import ru.netrunner.coursesmvp.dto.rules.ViewAccess;
+import ru.netrunner.coursesmvp.dto.rules.CourseValidationRules;
 import ru.netrunner.coursesmvp.services.CourseService;
 
 @RestController
@@ -24,24 +23,21 @@ public class EditorCourseController {
 
     CourseService courseService;
 
-    @JsonView(ViewAccess.AdminDetails.class)
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createCourse(@Validated(ValidationRules.Create.class) @RequestBody CourseDto courseDto) {
+    public ResponseEntity<?> createCourse(@Validated(CourseValidationRules.Create.class) @RequestBody CourseDto courseDto) {
         return courseService.createCourse(courseDto);
     }
 
-    @JsonView(ViewAccess.AdminDetails.class)
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateCourse(@Validated(ValidationRules.Update.class) @RequestBody CourseDto courseDto) {
+    public ResponseEntity<?> updateCourse(@Validated(CourseValidationRules.Update.class) @RequestBody CourseDto courseDto) {
         return courseService.updateCourse(courseDto);
     }
 
     @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteCourse(@Validated(ValidationRules.Delete.class) @RequestBody CourseDto courseDto) {
+    public ResponseEntity<?> deleteCourse(@Validated(CourseValidationRules.Delete.class) @RequestBody CourseDto courseDto) {
         return courseService.deleteCourse(courseDto);
     }
 
-    @JsonView(ViewAccess.Details.class)
     @PostMapping(value = "/get/all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllCourses(){
         return courseService.getAllCourses();
