@@ -14,7 +14,7 @@ import java.util.List;
 public class UserDto {
 
 
-    @NotNull(groups = {UserValidationRules.GetCourses.class}, message = "Id must not be null")
+    @NotNull(groups = {UserValidationRules.GetAllCourses.class, UserValidationRules.GetCourse.class}, message = "Id must not be null")
     @Null(message = "Id must be null")
     String id;
     @Null(message = "course list must be null")
