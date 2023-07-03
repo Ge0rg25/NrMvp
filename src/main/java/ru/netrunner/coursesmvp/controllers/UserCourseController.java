@@ -33,4 +33,9 @@ public class UserCourseController {
         return userService.getCourse(getCoursesRequestDto);
     }
 
+    @PostMapping(value = "/articles/get", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getArticle(@Validated(CourseRequestValidationRules.GetArticle.class) @RequestBody GetCourseRequestDto getCoursesRequestDto){
+        return userService.getArticle(getCoursesRequestDto);
+    }
+
 }

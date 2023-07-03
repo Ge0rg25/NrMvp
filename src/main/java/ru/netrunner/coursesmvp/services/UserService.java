@@ -6,11 +6,14 @@ import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import ru.netrunner.coursesmvp.dto.objects.ArticleDto;
 import ru.netrunner.coursesmvp.dto.objects.CourseDto;
 import ru.netrunner.coursesmvp.dto.objects.GetCourseRequestDto;
 import ru.netrunner.coursesmvp.errors.common.UserNotExistsException;
+import ru.netrunner.coursesmvp.models.ArticleEntity;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.models.UserEntity;
+import ru.netrunner.coursesmvp.repositories.ArticleRepository;
 import ru.netrunner.coursesmvp.repositories.UserRepository;
 
 import javax.ws.rs.ForbiddenException;
@@ -42,6 +45,17 @@ public class UserService {
                 courseEntity -> courseEntity.getId().equals(getCourseRequestDto.getCourseId())
         ).findFirst()
                 .orElseThrow(ForbiddenException::new), CourseDto.class);
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<?> getArticle(GetCourseRequestDto getCourseRequestDto){
+        UserEntity user = userRepository.findById(getCourseRequestDto.getId()).orElseThrow(UserNotExistsException::new);
+        ArticleEntity article = articleRepository.findById(getCourseRequestDto.getArticleId()).orElseThrow(ForbiddenException::new);
+        modelMapper.map(user.getCourses().stream().filter(
+                        courseEntity -> courseEntity.getId().equals(getCourseRequestDto.getCourseId())
+                ).findFirst()
+                .orElseThrow(ForbiddenException::new), CourseDto.class);
+        ArticleDto response = modelMapper.map(article, ArticleDto.class);
         return ResponseEntity.ok(response);
     }
 }
