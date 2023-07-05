@@ -15,9 +15,6 @@ public class GetCourseRequestDto {
     String id;
 
     @Null
-    @NotNull(groups = {CourseRequestValidationRules.GetCourse.class})
+    @NotNull(groups = {CourseRequestValidationRules.GetCourse.class, CourseRequestValidationRules.GetArticles.class})
     String courseId;
-    @Null
-    @NotNull(groups = {CourseRequestValidationRules.GetArticle.class})
-    String articleId;
 }

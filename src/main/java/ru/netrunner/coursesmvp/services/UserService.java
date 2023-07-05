@@ -10,10 +10,10 @@ import ru.netrunner.coursesmvp.dto.objects.ArticleDto;
 import ru.netrunner.coursesmvp.dto.objects.CourseDto;
 import ru.netrunner.coursesmvp.dto.objects.GetCourseRequestDto;
 import ru.netrunner.coursesmvp.errors.common.UserNotExistsException;
-import ru.netrunner.coursesmvp.models.ArticleEntity;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.models.UserEntity;
 import ru.netrunner.coursesmvp.repositories.ArticleRepository;
+import ru.netrunner.coursesmvp.repositories.CourseRepository;
 import ru.netrunner.coursesmvp.repositories.UserRepository;
 
 import javax.ws.rs.ForbiddenException;
@@ -26,7 +26,7 @@ import java.util.List;
 public class UserService {
 
     UserRepository userRepository;
-    ArticleRepository articleRepository;
+    CourseRepository courseRepository;
     ModelMapper modelMapper;
 
     public ResponseEntity<?> getUserCourses(GetCourseRequestDto getCourseRequestDto) {
@@ -48,14 +48,14 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getArticle(GetCourseRequestDto getCourseRequestDto){
+    public ResponseEntity<?> getArticles(GetCourseRequestDto getCourseRequestDto){
         UserEntity user = userRepository.findById(getCourseRequestDto.getId()).orElseThrow(UserNotExistsException::new);
-        ArticleEntity article = articleRepository.findById(getCourseRequestDto.getArticleId()).orElseThrow(ForbiddenException::new);
-        modelMapper.map(user.getCourses().stream().filter(
+        List<CourseEntity> courseList = user.getCourses();
+        CourseEntity course = courseList.stream().filter(
                         courseEntity -> courseEntity.getId().equals(getCourseRequestDto.getCourseId())
                 ).findFirst()
-                .orElseThrow(ForbiddenException::new), CourseDto.class);
-        ArticleDto response = modelMapper.map(article, ArticleDto.class);
+                .orElseThrow(ForbiddenException::new);
+        ArticleDto response = modelMapper.map(course.getArticles(), ArticleDto.class);
         return ResponseEntity.ok(response);
     }
 }

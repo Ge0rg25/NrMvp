@@ -5,5 +5,5 @@ public class CourseRequestValidationRules {
 
     public interface GetCourse{}
 
-    public interface GetArticle{}
+    public interface GetArticles {}
 }
