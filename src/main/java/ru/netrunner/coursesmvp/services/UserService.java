@@ -12,8 +12,6 @@ import ru.netrunner.coursesmvp.dto.objects.GetCourseRequestDto;
 import ru.netrunner.coursesmvp.errors.common.UserNotExistsException;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.models.UserEntity;
-import ru.netrunner.coursesmvp.repositories.ArticleRepository;
-import ru.netrunner.coursesmvp.repositories.CourseRepository;
 import ru.netrunner.coursesmvp.repositories.UserRepository;
 
 import javax.ws.rs.ForbiddenException;
@@ -26,7 +24,6 @@ import java.util.List;
 public class UserService {
 
     UserRepository userRepository;
-    CourseRepository courseRepository;
     ModelMapper modelMapper;
 
     public ResponseEntity<?> getUserCourses(GetCourseRequestDto getCourseRequestDto) {
