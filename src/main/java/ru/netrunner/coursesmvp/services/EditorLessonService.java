@@ -8,12 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import ru.netrunner.coursesmvp.dto.objects.CourseDto;
 import ru.netrunner.coursesmvp.dto.objects.LessonDto;
-import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
 import ru.netrunner.coursesmvp.errors.common.LessonAlreadyExistsError;
 import ru.netrunner.coursesmvp.errors.common.LessonNotExistsError;
-import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.models.LessonEntity;
 import ru.netrunner.coursesmvp.repositories.LessonRepository;
 
@@ -33,9 +30,9 @@ public class EditorLessonService {
         if(lessonRepository.existsByTitle(lessonDto.getTitle()))
             throw new LessonAlreadyExistsError();
 
-        LessonEntity courseEntity = modelMapper.map(lessonDto, LessonEntity.class);
-        lessonRepository.save(courseEntity);
-        return new ResponseEntity<>(modelMapper.map(courseEntity, CourseDto.class), HttpStatus.CREATED);
+        LessonEntity lessonEntity = modelMapper.map(lessonDto, LessonEntity.class);
+        lessonRepository.save(lessonEntity);
+        return new ResponseEntity<>(modelMapper.map(lessonEntity, LessonDto.class), HttpStatus.CREATED);
     }
 
 
@@ -47,7 +44,7 @@ public class EditorLessonService {
         lessonEntity.setBody(lessonDto.getBody());
         lessonEntity.setEnabled(lessonDto.getEnabled());
         lessonRepository.save(lessonEntity);
-        return new ResponseEntity<>(modelMapper.map(lessonEntity, CourseDto.class), HttpStatus.OK);
+        return new ResponseEntity<>(modelMapper.map(lessonEntity, LessonDto.class), HttpStatus.OK);
     }
 
     @Transactional

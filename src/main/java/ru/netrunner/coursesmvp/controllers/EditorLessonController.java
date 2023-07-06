@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.netrunner.coursesmvp.dto.objects.LessonDto;
 import ru.netrunner.coursesmvp.dto.rules.LessonValidationRules;
 import ru.netrunner.coursesmvp.services.EditorLessonService;
-import ru.netrunner.coursesmvp.services.LessonService;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
