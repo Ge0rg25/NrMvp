@@ -1,0 +1,16 @@
+version: "1.0"
+name: "netrunner_compose"
+
+services:
+  database:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - 5432:5432
+
+  auth:
+    image: ge0rg25/netrunner-auth
+    ports:
+      - 8180:8180

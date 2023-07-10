@@ -1,6 +1,5 @@
 package ru.netrunner.coursesmvp.controllers;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

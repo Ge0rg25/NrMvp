@@ -1,9 +1,5 @@
 package ru.netrunner.coursesmvp.dto.objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.AccessLevel;
@@ -11,7 +7,6 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import ru.netrunner.coursesmvp.dto.rules.LessonValidationRules;
 
-import java.util.UUID;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)

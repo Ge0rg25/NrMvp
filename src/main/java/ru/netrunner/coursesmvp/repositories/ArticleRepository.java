@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import ru.netrunner.coursesmvp.models.ArticleEntity;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 
-import java.util.UUID;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<ArticleEntity, String> {

@@ -1,4 +1,4 @@
-package ru.netrunner.Lessonsmvp.controllers;
+package ru.netrunner.coursesmvp.controllers;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
