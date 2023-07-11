@@ -22,7 +22,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class ArticleService {
+public class EditorArticleService {
 
     ArticleRepository articleRepository;
     CourseRepository courseRepository;

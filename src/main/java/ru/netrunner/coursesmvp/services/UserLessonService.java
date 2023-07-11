@@ -3,7 +3,6 @@ package ru.netrunner.coursesmvp.services;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.modelmapper.Converters;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ import java.util.UUID;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-public class LessonService {
+public class UserLessonService {
     LessonRepository lessonRepository;
     ModelMapper modelMapper;
     public ResponseEntity<?> getLesson(String uuid){

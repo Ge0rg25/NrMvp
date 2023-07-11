@@ -4,4 +4,6 @@ public class UserValidationRules {
     public interface GetAllCourses {}
 
     public interface GetCourse{}
+
+    public interface Get {}
 }

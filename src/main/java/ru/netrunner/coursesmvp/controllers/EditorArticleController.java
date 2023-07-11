@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.netrunner.coursesmvp.dto.objects.ArticleDto;
 import ru.netrunner.coursesmvp.dto.rules.ArticleValidationRules;
-import ru.netrunner.coursesmvp.services.ArticleService;
+import ru.netrunner.coursesmvp.services.EditorArticleService;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -20,7 +20,7 @@ import ru.netrunner.coursesmvp.services.ArticleService;
 @RequestMapping("/editor/articles")
 public class EditorArticleController {
 
-    ArticleService articleService;
+    EditorArticleService articleService;
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createArticle(@Validated(ArticleValidationRules.Create.class) @RequestBody ArticleDto articleDto){

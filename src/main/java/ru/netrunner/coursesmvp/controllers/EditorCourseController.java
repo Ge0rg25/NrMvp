@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.netrunner.coursesmvp.dto.objects.CourseDto;
+import ru.netrunner.coursesmvp.dto.objects.UserDto;
 import ru.netrunner.coursesmvp.dto.rules.CourseValidationRules;
-import ru.netrunner.coursesmvp.services.CourseService;
+import ru.netrunner.coursesmvp.dto.rules.UserValidationRules;
+import ru.netrunner.coursesmvp.services.EditorCourseService;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -20,7 +22,7 @@ import ru.netrunner.coursesmvp.services.CourseService;
 @RequestMapping("/editor/courses")
 public class EditorCourseController {
 
-    CourseService courseService;
+    EditorCourseService courseService;
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createCourse(@Validated(CourseValidationRules.Create.class) @RequestBody CourseDto courseDto) {
@@ -35,6 +37,11 @@ public class EditorCourseController {
     @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteCourse(@Validated(CourseValidationRules.Delete.class) @RequestBody CourseDto courseDto) {
         return courseService.deleteCourse(courseDto);
+    }
+
+    @PostMapping(value = "/course/users/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addCourseAccessToUser(@Validated(UserValidationRules.Get.class) @RequestBody UserDto userDto, @Validated(CourseValidationRules.Get.class) @RequestBody CourseDto courseDto){
+        return courseService.addCourseAccessToUser(userDto, courseDto);
     }
 
     @PostMapping(value = "/get/all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

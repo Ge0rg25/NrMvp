@@ -10,11 +10,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.objects.CourseDto;
+import ru.netrunner.coursesmvp.dto.objects.UserDto;
 import ru.netrunner.coursesmvp.errors.common.CourseAlreadyExistsError;
 import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
+import ru.netrunner.coursesmvp.errors.common.UserNotExistsException;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.repositories.CourseRepository;
+import ru.netrunner.coursesmvp.repositories.UserRepository;
 
+import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +26,11 @@ import java.util.Map;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-public class CourseService {
+public class EditorCourseService {
 
     CourseRepository courseRepository;
     ModelMapper modelMapper;
+    UserRepository userRepository;
 
     @Transactional
     public ResponseEntity<?> createCourse(CourseDto courseDto){
@@ -62,5 +67,13 @@ public class CourseService {
             courseDtos.add(modelMapper.map(courseEntity, CourseDto.class));
         }
         return new ResponseEntity<>(courseDtos, HttpStatus.OK);
+    }
+
+    @Transactional
+    public ResponseEntity<?> addCourseAccessToUser(UserDto userDto, CourseDto courseDto){
+        CourseEntity courseEntity = courseRepository.findById(courseDto.getId()).orElseThrow(NotFoundException::new);
+        courseEntity.getUsers().add(userRepository.findById(userDto.getId()).orElseThrow(UserNotExistsException::new));
+        courseRepository.save(courseEntity);
+        return new ResponseEntity<>(modelMapper.map(courseEntity, CourseDto.class), HttpStatus.OK);
     }
 }

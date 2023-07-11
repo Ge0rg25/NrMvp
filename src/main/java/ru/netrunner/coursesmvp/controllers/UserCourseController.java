@@ -8,12 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.netrunner.coursesmvp.dto.objects.CourseDto;
-import ru.netrunner.coursesmvp.dto.objects.GetCourseRequestDto;
-import ru.netrunner.coursesmvp.dto.rules.CourseRequestValidationRules;
 import ru.netrunner.coursesmvp.dto.rules.CourseValidationRules;
-import ru.netrunner.coursesmvp.services.UserService;
+import ru.netrunner.coursesmvp.services.UserCourseService;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -21,7 +22,7 @@ import ru.netrunner.coursesmvp.services.UserService;
 @RequestMapping("/courses")
 public class UserCourseController {
 
-    UserService userService;
+    UserCourseService userService;
 
     @PostMapping(value = "/get/all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCourses(@AuthenticationPrincipal Jwt jwt) {
