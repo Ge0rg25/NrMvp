@@ -27,8 +27,7 @@ public class SpringSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/admin/**").hasRole("admin")
-//                        .requestMatchers("/editor/**").hasRole("admin")
-                        .requestMatchers("/editor/**").hasRole("editor")
+                        .requestMatchers("/editor/**").hasAnyRole("editor", "admin")
                         .requestMatchers("/course/**").authenticated()
                         .requestMatchers("/user/**").authenticated()
                         .anyRequest().permitAll()
