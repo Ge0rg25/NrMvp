@@ -23,7 +23,6 @@ public class UserService {
 
     public ResponseEntity<?> getUser(String userId) {
         Optional<UserEntity> u = userRepository.findById(userId);
-
         if(u.isEmpty()) {
             UserEntity userEntity = new UserEntity();
             userEntity.setId(userId);
@@ -33,5 +32,15 @@ public class UserService {
         }
         UserDto response = modelMapper.map(u.get(), UserDto.class);
         return ResponseEntity.ok(response);
+    }
+
+
+    public void syncUser(String userId){
+        if(userRepository.existsById(userId)){
+            return;
+        }
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        userRepository.save(userEntity);
     }
 }
