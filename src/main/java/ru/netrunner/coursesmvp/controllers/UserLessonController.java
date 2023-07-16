@@ -14,7 +14,7 @@ import ru.netrunner.coursesmvp.services.UserLessonService;
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-@RequestMapping("/editor/lessons")
+@RequestMapping("/lessons")
 public class UserLessonController {
 
     UserLessonService lessonService;

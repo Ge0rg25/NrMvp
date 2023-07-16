@@ -68,12 +68,4 @@ public class EditorCourseService {
         }
         return new ResponseEntity<>(courseDtos, HttpStatus.OK);
     }
-
-    @Transactional
-    public ResponseEntity<?> addCourseAccessToUser(UserDto userDto, CourseDto courseDto){
-        CourseEntity courseEntity = courseRepository.findById(courseDto.getId()).orElseThrow(NotFoundException::new);
-        courseEntity.getUsers().add(userRepository.findById(userDto.getId()).orElseThrow(UserNotExistsException::new));
-        courseRepository.save(courseEntity);
-        return new ResponseEntity<>(modelMapper.map(courseEntity, CourseDto.class), HttpStatus.OK);
-    }
 }

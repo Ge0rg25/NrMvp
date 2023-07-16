@@ -39,11 +39,6 @@ public class EditorCourseController {
         return courseService.deleteCourse(courseDto);
     }
 
-    @PostMapping(value = "/course/users/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addCourseAccessToUser(@Validated(UserValidationRules.Get.class) @RequestBody UserDto userDto, @Validated(CourseValidationRules.Get.class) @RequestBody CourseDto courseDto){
-        return courseService.addCourseAccessToUser(userDto, courseDto);
-    }
-
     @PostMapping(value = "/get/all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllCourses(){
         return courseService.getAllCourses();

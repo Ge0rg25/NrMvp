@@ -12,6 +12,7 @@ import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.netrunner.coursesmvp.errors.common.UserNotExistsException;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -59,6 +60,10 @@ public class KeycloakUtils {
 
     public UserRepresentation findUserById(String userId){
         return usersResource.get(userId).toRepresentation();
+    }
+
+    public UserRepresentation findUserByEmail(String email){
+        return usersResource.searchByEmail(email, true).stream().findFirst().orElseThrow(UserNotExistsException::new);
     }
 
     public void addRoles(String userId, List<String> roles) {
