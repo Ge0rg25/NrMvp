@@ -1,9 +1,11 @@
 package ru.netrunner.coursesmvp.services;
 
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.objects.ArticleDto;
@@ -15,6 +17,7 @@ import ru.netrunner.coursesmvp.models.UserEntity;
 import ru.netrunner.coursesmvp.repositories.UserRepository;
 
 import javax.ws.rs.ForbiddenException;
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,5 +57,17 @@ public class UserService {
                 .orElseThrow(ForbiddenException::new);
         ArticleDto response = modelMapper.map(course.getArticles(), ArticleDto.class);
         return ResponseEntity.ok(response);
+    }
+
+
+
+    @Transactional
+    public ResponseEntity<?> userSetup(String id){
+        if(!userRepository.existsById(id)){
+            UserEntity userEntity = new UserEntity();
+            userEntity.setId(id);
+            userRepository.save(userEntity);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

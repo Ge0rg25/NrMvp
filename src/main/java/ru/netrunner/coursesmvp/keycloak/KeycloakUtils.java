@@ -56,23 +56,28 @@ public class KeycloakUtils {
     }
 
 
-
-    public UserRepresentation findUserById(String userId){
+    public UserRepresentation findUserById(String userId) {
         return usersResource.get(userId).toRepresentation();
     }
 
     public void addRoles(String userId, List<String> roles) {
-
         List<RoleRepresentation> kcRoles = new ArrayList<>();
-
         for (String role : roles) {
             RoleRepresentation roleRep = realmResource.clients().get("netrunner-courses-client").roles().get(role).toRepresentation();
             kcRoles.add(roleRep);
         }
-
         UserResource uniqueUserResource = usersResource.get(userId);
-
         uniqueUserResource.roles().realmLevel().add(kcRoles);
 
+    }
+
+    public String getUserIdByEmail(String email) {
+        try {
+            UserRepresentation userRepresentation = realmResource.users().searchByEmail(email, true).get(0);
+            return userRepresentation.getId();
+        } catch (RuntimeException exception) {
+            // TODO: create and throw user not exists exteption
+        }
+        return "";
     }
 }

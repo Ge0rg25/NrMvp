@@ -32,7 +32,7 @@ public class CourseEntity {
 
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "course_user",
             joinColumns = @JoinColumn(name = "course_id"),
