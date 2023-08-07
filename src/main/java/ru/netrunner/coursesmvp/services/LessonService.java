@@ -3,11 +3,9 @@ package ru.netrunner.coursesmvp.services;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.modelmapper.Converters;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import ru.netrunner.coursesmvp.dto.objects.LessonDto;
+import ru.netrunner.coursesmvp.dto.LessonDto;
 import ru.netrunner.coursesmvp.models.LessonEntity;
 import ru.netrunner.coursesmvp.repositories.LessonRepository;
 
@@ -19,13 +17,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LessonService {
     LessonRepository lessonRepository;
-    ModelMapper modelMapper;
-    public ResponseEntity<?> getLesson(String uuid){
+
+    public ResponseEntity<?> getLesson(String uuid) {
         LessonEntity lessonEntity = lessonRepository.findLessonEntityByAccessCode(UUID.fromString(uuid)).orElseThrow(ForbiddenException::new);
 
-        if(!lessonEntity.getEnabled()) throw new ForbiddenException();
+        if (!lessonEntity.getEnabled()) throw new ForbiddenException();
 
-        LessonDto response = modelMapper.map(lessonEntity, LessonDto.class);
+        LessonDto.Response.BaseResponse response = LessonDto.Response.BaseResponse.builder()
+                .id(lessonEntity.getId())
+                .title(lessonEntity.getTitle())
+                .description(lessonEntity.getDescription())
+                .body(lessonEntity.getBody())
+                .enabled(lessonEntity.getEnabled())
+                .build();
         return ResponseEntity.ok(response);
     }
 }

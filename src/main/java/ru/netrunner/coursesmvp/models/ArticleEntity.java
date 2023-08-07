@@ -1,8 +1,7 @@
 package ru.netrunner.coursesmvp.models;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 
@@ -10,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "articles")
+@Builder
 public class ArticleEntity {
 
     @Id
@@ -28,5 +28,11 @@ public class ArticleEntity {
     @ManyToOne
     @JoinColumn(name = "course_id")
     CourseEntity course;
+
+    public ArticleEntity(String title, String description, String body) {
+        this.title = title;
+        this.description = description;
+        this.body = body;
+    }
 
 }

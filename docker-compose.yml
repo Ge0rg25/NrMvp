@@ -9,8 +9,26 @@ services:
       POSTGRES_PASSWORD: "postgres"
     ports:
       - 5432:5432
+    networks:
+      - backend-network
 
   auth:
-    image: ge0rg25/netrunner-auth
+    image: ge0rg25/netrunner-auth:latest
     ports:
       - 8180:8180
+    networks:
+      - backend-network
+
+#  backend:
+#    image: ge0rg25/netrunner-backend:latest
+#    ports:
+#      - 2000:2000
+#    depends_on:
+#      - auth
+#      - database
+#    networks:
+#      - backend-network
+
+
+networks:
+  backend-network:

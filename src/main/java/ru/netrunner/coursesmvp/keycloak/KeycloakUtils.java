@@ -2,6 +2,7 @@ package ru.netrunner.coursesmvp.keycloak;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -19,16 +20,20 @@ import java.util.List;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Slf4j
 public class KeycloakUtils {
 
     @Value("${keycloak.auth-server-url}")
     String serverURL;
     @Value("${keycloak.realm}")
     String realm;
-    @Value("${keycloak.resource}")
-    String clientID;
+    @Value("${keycloak.client.manage}")
+    String manageClientId;
+    @Value("${keycloak.client.business}")
+    String buisnesClientId;
     @Value("${keycloak.credentials.secret}")
     String clientSecret;
+
 
     static Keycloak keycloak;
     static RealmResource realmResource;
@@ -42,7 +47,7 @@ public class KeycloakUtils {
             keycloak = KeycloakBuilder.builder()
                     .realm(realm)
                     .serverUrl(serverURL)
-                    .clientId(clientID)
+                    .clientId(manageClientId)
                     .clientSecret(clientSecret)
                     .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
                     .build();
@@ -63,7 +68,7 @@ public class KeycloakUtils {
     public void addRoles(String userId, List<String> roles) {
         List<RoleRepresentation> kcRoles = new ArrayList<>();
         for (String role : roles) {
-            RoleRepresentation roleRep = realmResource.clients().get("netrunner-courses-client").roles().get(role).toRepresentation();
+            RoleRepresentation roleRep = realmResource.clients().get(buisnesClientId).roles().get(role).toRepresentation();
             kcRoles.add(roleRep);
         }
         UserResource uniqueUserResource = usersResource.get(userId);
@@ -73,8 +78,14 @@ public class KeycloakUtils {
 
     public String getUserIdByEmail(String email) {
         try {
-            UserRepresentation userRepresentation = realmResource.users().searchByEmail(email, true).get(0);
-            return userRepresentation.getId();
+            log.info("Searching by email: {} (exact {})", email, true);
+
+            List<UserRepresentation> users = keycloak.realm(realm)
+                    .users()
+                    .searchByEmail(email, true);
+
+            log.warn(users.get(0).getId());
+            return users.get(0).getId();
         } catch (RuntimeException exception) {
             // TODO: create and throw user not exists exteption
         }

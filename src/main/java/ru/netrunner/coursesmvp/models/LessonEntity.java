@@ -3,6 +3,8 @@ package ru.netrunner.coursesmvp.models;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
@@ -13,6 +15,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "lessons")
+@Builder
+@AllArgsConstructor
 public class LessonEntity {
 
     @Id
@@ -35,5 +39,7 @@ public class LessonEntity {
     @Column(nullable = false)
     Boolean enabled;
 
+    public LessonEntity() {
 
+    }
 }
