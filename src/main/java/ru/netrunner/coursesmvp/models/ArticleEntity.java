@@ -29,10 +29,8 @@ public class ArticleEntity {
     @JoinColumn(name = "course_id")
     CourseEntity course;
 
-    public ArticleEntity(String title, String description, String body) {
-        this.title = title;
-        this.description = description;
-        this.body = body;
-    }
 
+    public ArticleEntity() {
+
+    }
 }
