@@ -10,17 +10,17 @@ import org.hibernate.validator.constraints.Length;
 
 public class CourseDto {
     private interface Id {
-        @Schema(name = "ID курса")
+        @Schema(description = "ID курса")
         String id();
     }
     private interface Title {
-        @Schema(name = "Заголовок курса")
+        @Schema(description = "Заголовок курса")
         @Length(max = 50)
         String title();
     }
     private interface Description {
 
-        @Schema(name = "Описание статьи")
+        @Schema(description = "Описание статьи")
         @Length(max = 500)
         String description();
     }

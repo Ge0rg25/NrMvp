@@ -2,6 +2,8 @@ package ru.netrunner.coursesmvp.controllers;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,8 @@ public class AdminController {
     AdminService adminService;
 
     @Operation(summary = "Выдача пользователю доступ к курсу")
+    @ApiResponse(responseCode = "200", description = "course successfully issued",
+            content = {@Content})
     @PostMapping("/give")
     public ResponseEntity<?> giveCourse(@RequestBody AdminDto.Request.Give adminDto){
         return adminService.giveCourse(adminDto);

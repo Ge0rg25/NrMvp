@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "articles")
 @Builder
+@AllArgsConstructor
 public class ArticleEntity {
 
     @Id

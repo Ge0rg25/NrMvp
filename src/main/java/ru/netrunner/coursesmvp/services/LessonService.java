@@ -6,10 +6,10 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.LessonDto;
+import ru.netrunner.coursesmvp.errors.common.LessonNotExistsError;
 import ru.netrunner.coursesmvp.models.LessonEntity;
 import ru.netrunner.coursesmvp.repositories.LessonRepository;
 
-import javax.ws.rs.ForbiddenException;
 import java.util.UUID;
 
 @Service
@@ -19,9 +19,9 @@ public class LessonService {
     LessonRepository lessonRepository;
 
     public ResponseEntity<?> getLesson(String uuid) {
-        LessonEntity lessonEntity = lessonRepository.findLessonEntityByAccessCode(UUID.fromString(uuid)).orElseThrow(ForbiddenException::new);
+        LessonEntity lessonEntity = lessonRepository.findLessonEntityByAccessCode(UUID.fromString(uuid)).orElseThrow(LessonNotExistsError::new);
 
-        if (!lessonEntity.getEnabled()) throw new ForbiddenException();
+        if (!lessonEntity.getEnabled()) throw new LessonNotExistsError();
 
         LessonDto.Response.BaseResponse response = LessonDto.Response.BaseResponse.builder()
                 .id(lessonEntity.getId())

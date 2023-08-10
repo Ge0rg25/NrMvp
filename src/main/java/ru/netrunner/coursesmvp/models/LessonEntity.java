@@ -3,6 +3,7 @@ package ru.netrunner.coursesmvp.models;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "lessons")
 @Builder
+@AllArgsConstructor
 public class LessonEntity {
 
     @Id

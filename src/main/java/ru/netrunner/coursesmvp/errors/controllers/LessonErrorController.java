@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import ru.netrunner.coursesmvp.errors.common.CourseAlreadyExistsError;
-import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
 import ru.netrunner.coursesmvp.errors.common.LessonAlreadyExistsError;
 import ru.netrunner.coursesmvp.errors.common.LessonNotExistsError;
 import ru.netrunner.coursesmvp.utils.ErrorUtils;
