@@ -38,9 +38,11 @@ services:
       - database
     environment:
       POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
       KEYCLOAK_HOST: auth
+      KEYCLOAK_PORT: 8180
     networks:
       - backend-network
 
