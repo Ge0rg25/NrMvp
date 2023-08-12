@@ -27,6 +27,7 @@ services:
       - ./realm.json:/opt/keycloak/data/import/realm.json
     networks:
       - backend-network
+    platform: "linux/amd64"
 
   backend:
     image: ge0rg25/netrunner-backend:latest
