@@ -34,11 +34,11 @@ public class UserService {
         List<CourseDto.Response.BaseResponse> response = new ArrayList<>();
         for (CourseEntity courseEntity : courseList)
             response.add(
-                    CourseDto.Response.BaseResponse.builder()
-                            .id(courseEntity.getId())
-                            .title(courseEntity.getTitle())
-                            .description(courseEntity.getDescription())
-                            .build()
+                    new CourseDto.Response.BaseResponse(
+                            courseEntity.getId(),
+                            courseEntity.getTitle(),
+                            courseEntity.getDescription()
+                    )
             );
         return ResponseEntity.ok(response);
     }
@@ -50,25 +50,26 @@ public class UserService {
                         courseEntity -> courseEntity.getId().equals(courseDto.id())
                 ).findFirst()
                 .orElseThrow(CourseNotExistsError::new);
-        CourseDto.Response.BaseResponse response = CourseDto.Response.BaseResponse.builder()
-                .id(findedCourse.getId())
-                .title(findedCourse.getTitle())
-                .description(findedCourse.getDescription())
-                .build();
+        CourseDto.Response.BaseResponse response = new CourseDto.Response.BaseResponse(
+                findedCourse.getId(),
+                findedCourse.getTitle(),
+                findedCourse.getDescription()
+        );
         return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<?> getArticles(CourseDto.Request.Get courseDto) {
         CourseEntity course = courseRepository.findById(courseDto.id()).orElseThrow(CourseNotExistsError::new);
-        List<ArticleDto.Response.SingleArticle> response = new ArrayList<>();
+        List<ArticleDto.Response.BaseResponse> response = new ArrayList<>();
         for (ArticleEntity articleEntity : course.getArticles()) {
             response.add(
-                    ArticleDto.Response.SingleArticle.builder()
-                            .id(articleEntity.getId())
-                            .description(articleEntity.getDescription())
-                            .body(articleEntity.getBody())
-                            .title(articleEntity.getTitle())
-                            .build()
+                    new ArticleDto.Response.BaseResponse(
+                            articleEntity.getTitle(),
+                            articleEntity.getDescription(),
+                            articleEntity.getBody(),
+                            articleEntity.getId()
+
+                    )
             );
         }
         return ResponseEntity.ok(response);

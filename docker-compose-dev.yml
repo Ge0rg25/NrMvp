@@ -19,21 +19,6 @@ services:
     networks:
       - backend-network
 
-  backend:
-    image: ge0rg25/netrunner-backend:latest
-    ports:
-      - 2000:2000
-    depends_on:
-      - auth
-      - database
-    environment:
-      POSTGRES_HOST: database
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      KEYCLOAK_HOST: auth
-    networks:
-      - backend-network
-
 
 networks:
   backend-network:

@@ -22,7 +22,7 @@ import ru.netrunner.coursesmvp.services.UserService;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/courses")
-@Tag(name = "User requests", description = "Запросы для пользователей")
+@Tag(name = "User Requests", description = "Запросы для пользователей")
 public class UserCourseController {
 
     UserService userService;
@@ -46,7 +46,7 @@ public class UserCourseController {
 
     @Operation(summary = "Получение всех статей из курса по id")
     @ApiResponse(responseCode = "200", description = "articles",
-            content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ArticleDto.Response.SingleArticle.class)))})
+            content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/get/articles", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getArticles(@RequestBody CourseDto.Request.Get courseDto) {
         return userService.getArticles(courseDto);

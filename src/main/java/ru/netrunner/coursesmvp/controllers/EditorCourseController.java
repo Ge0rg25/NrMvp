@@ -22,7 +22,7 @@ import ru.netrunner.coursesmvp.services.CourseService;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/editor/courses")
-@Tag(name = "Requesrs for edit courses")
+@Tag(name = "Requests For Edit Courses")
 public class EditorCourseController {
 
     CourseService courseService;

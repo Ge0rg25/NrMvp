@@ -3,7 +3,6 @@ package ru.netrunner.coursesmvp.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
 
@@ -61,13 +60,8 @@ public class ArticleDto {
     public static class Response {
 
         @Schema(name = "Response | Article Base Response", description = "Dto для отдачи информации об одной статьи")
-        @Builder
-        public record SingleArticle(String title, String description, String body, String id) implements Title, Description, Body, Id {
+        public record BaseResponse(String title, String description, String body, String id) implements Title, Description, Body, Id {
         }
-
-//        @Schema(name = "Response | Article Find All Response", description = "Dto для отдачи информации о списке статей")
-//        public record ManyArticles(List<SingleArticle> responses) {}
-
     }
 
 

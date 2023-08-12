@@ -47,11 +47,11 @@ public class CourseService {
         courseEntity.setTitle(courseDto.title());
         courseEntity.setDescription(courseDto.description());
         courseRepository.save(courseEntity);
-        CourseDto.Response.BaseResponse response = CourseDto.Response.BaseResponse.builder()
-                .id(courseEntity.getId())
-                .title(courseEntity.getTitle())
-                .description(courseEntity.getDescription())
-                .build();
+        CourseDto.Response.BaseResponse response = new CourseDto.Response.BaseResponse(
+                courseEntity.getId(),
+                courseEntity.getTitle(),
+                courseEntity.getDescription()
+        );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -68,11 +68,11 @@ public class CourseService {
         List<CourseDto.Response.BaseResponse> courseDtos = new ArrayList<>();
         for (CourseEntity courseEntity : courseEntities) {
             courseDtos.add(
-                    CourseDto.Response.BaseResponse.builder()
-                            .id(courseEntity.getId())
-                            .title(courseEntity.getTitle())
-                            .description(courseEntity.getDescription())
-                            .build()
+                    new CourseDto.Response.BaseResponse(
+                            courseEntity.getId(),
+                            courseEntity.getTitle(),
+                            courseEntity.getDescription()
+                    )
             );
         }
         return new ResponseEntity<>(courseDtos, HttpStatus.OK);

@@ -23,13 +23,14 @@ public class LessonService {
 
         if (!lessonEntity.getEnabled()) throw new LessonNotExistsError();
 
-        LessonDto.Response.BaseResponse response = LessonDto.Response.BaseResponse.builder()
-                .id(lessonEntity.getId())
-                .title(lessonEntity.getTitle())
-                .description(lessonEntity.getDescription())
-                .body(lessonEntity.getBody())
-                .enabled(lessonEntity.getEnabled())
-                .build();
+        LessonDto.Response.BaseResponse response = new LessonDto.Response.BaseResponse(
+                lessonEntity.getId(),
+                lessonEntity.getTitle(),
+                lessonEntity.getDescription(),
+                lessonEntity.getBody(),
+                true,
+                lessonEntity.getAccessCode().toString()
+        );
         return ResponseEntity.ok(response);
     }
 }

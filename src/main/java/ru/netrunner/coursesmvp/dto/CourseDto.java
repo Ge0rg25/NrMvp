@@ -27,17 +27,19 @@ public class CourseDto {
 
 
     public static class Request {
-
+        @Schema(name = "Request | Course create Dto")
         public record Create(@NotBlank String title, String description) implements Title, Description{}
+        @Schema(name = "Request | Course update Dto")
         public record Update(@NotBlank String id, @NotBlank String title, String description) implements Id, Title, Description{}
 
+        @Schema(name = "Request | Course delete Dto")
         public record Delete(@NotBlank String id) implements Id{}
 
+        @Schema(name = "Request | Course get Dto")
         public record Get(@NotBlank String id) implements Id{}
     }
 
     public static class Response {
-        @Builder
         @Schema(name = "Response | Course Base Response", description = "Dto для отдачи информации о курсе")
         public record BaseResponse(String id, String title, String description) implements Id, Title, Description{}
 

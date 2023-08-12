@@ -13,6 +13,7 @@ import java.util.Map;
 // класс конвертер из данных JWT в роли spring security
 public class KCRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
+
     private final String CLIENT_ID = "netrunner-courses-client";
     private final String ACCESS_CLAIM = "resource_access";
 
@@ -26,6 +27,7 @@ public class KCRoleConverter implements Converter<Jwt, Collection<GrantedAuthori
         }
 
         Collection<GrantedAuthority> returnValue = new ArrayList<>();
+
 
         for (String roleName : (List<String>) clientAccess.get("roles")) {
             returnValue.add(new SimpleGrantedAuthority("ROLE_" + roleName));

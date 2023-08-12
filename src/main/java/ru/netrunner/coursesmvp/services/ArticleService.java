@@ -40,12 +40,13 @@ public class ArticleService {
                 .build();
         articleEntity.setCourse(courseEntity);
         articleRepository.save(articleEntity);
-        ArticleDto.Response.SingleArticle responseDto = ArticleDto.Response.SingleArticle.builder()
-                .id(articleEntity.getId())
-                .title(articleEntity.getTitle())
-                .description(articleEntity.getDescription())
-                .body(articleEntity.getBody())
-                .build();
+        ArticleDto.Response.BaseResponse responseDto = new ArticleDto.Response.BaseResponse(
+                articleEntity.getTitle(),
+                articleEntity.getDescription(),
+                articleEntity.getBody(),
+                articleEntity.getId()
+
+        );
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
@@ -57,12 +58,13 @@ public class ArticleService {
         articleEntity.setDescription(articleDto.description());
         articleEntity.setBody(articleDto.body());
         articleRepository.save(articleEntity);
-        ArticleDto.Response.SingleArticle responseDto = ArticleDto.Response.SingleArticle.builder()
-                .id(articleEntity.getId())
-                .title(articleEntity.getTitle())
-                .description(articleEntity.getDescription())
-                .body(articleEntity.getBody())
-                .build();
+        ArticleDto.Response.BaseResponse responseDto = new ArticleDto.Response.BaseResponse(
+                articleEntity.getTitle(),
+                articleEntity.getDescription(),
+                articleEntity.getBody(),
+                articleEntity.getId()
+
+        );
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
@@ -77,15 +79,16 @@ public class ArticleService {
     public ResponseEntity<?> getAllByCourseId(ArticleDto.Request.FindAll articleDto) {
         CourseEntity courseEntity = courseRepository.findById(articleDto.courseId()).orElseThrow(CourseNotExistsError::new);
         List<ArticleEntity> articleEntities = courseEntity.getArticles();
-        List<ArticleDto.Response.SingleArticle> response = new ArrayList<>();
+        List<ArticleDto.Response.BaseResponse> response = new ArrayList<>();
 
         for (ArticleEntity articleEntity : articleEntities) {
-            response.add(ArticleDto.Response.SingleArticle.builder()
-                    .id(articleEntity.getId())
-                    .title(articleEntity.getTitle())
-                    .description(articleEntity.getDescription())
-                    .body(articleEntity.getBody())
-                    .build());
+            response.add(new ArticleDto.Response.BaseResponse(
+                    articleEntity.getTitle(),
+                    articleEntity.getDescription(),
+                    articleEntity.getBody(),
+                    articleEntity.getId()
+
+            ));
         }
         return new ResponseEntity<>(response.toArray(), HttpStatus.OK);
     }

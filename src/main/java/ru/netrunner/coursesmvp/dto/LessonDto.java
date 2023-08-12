@@ -10,38 +10,46 @@ import lombok.Builder;
 public class LessonDto{
 
     private interface Id {
+        @Schema(description = "ID статьи")
         String id();
     }
     private interface Title {
+        @Schema(description = "Заголовок урока")
         String title();
     }
     private interface Description{
+        @Schema(description = "Описание урока")
         String description();
     }
     private interface Body{
+        @Schema(description = "Содержание урока")
         String body();
     }
     private interface Enabled{
+        @Schema(description = "Значение доступка к уроку")
         Boolean enabled();
     }
     private interface AccessCode{
+        @Schema(description = "Код урока")
         @JsonProperty("access_code")
         String accessCode();
     }
 
     public static class Request {
 
+        @Schema(name = "Request | Lesson create Dto")
         public record Create(@NotBlank String title, String description, String body, @NotNull Boolean enabled) implements Title, Description, Body, Enabled{}
+        @Schema(name = "Request | Lesson update Dto")
         public record Update(String id,String title, String description, String body, Boolean enabled) implements Id, Title, Description, Body, Enabled{}
-
+        @Schema(name = "Request | Lesson delete Dto")
         public record Delete(@NotBlank String id) implements Id {}
+        @Schema(name = "Request | Lesson get Dto")
         public record Get(@NotBlank String accessCode) implements AccessCode{}
     }
 
     public static class Response{
 
         @Schema(name = "Response | Lesson response dto")
-        @Builder
         public record BaseResponse(String id, String title, String description, String body, Boolean enabled, String accessCode) implements Id, Title, Description, Body, Enabled, AccessCode{}
 
     }

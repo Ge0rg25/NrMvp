@@ -36,13 +36,14 @@ public class EditorLessonService {
                 .build();
         lessonRepository.save(lessonEntity);
 
-        LessonDto.Response.BaseResponse response = LessonDto.Response.BaseResponse.builder()
-                .id(lessonEntity.getId())
-                .title(lessonEntity.getTitle())
-                .description(lessonEntity.getDescription())
-                .body(lessonDto.body())
-                .enabled(lessonDto.enabled())
-                .build();
+        LessonDto.Response.BaseResponse response = new LessonDto.Response.BaseResponse(
+                lessonEntity.getId(),
+                lessonEntity.getTitle(),
+                lessonEntity.getDescription(),
+                lessonEntity.getBody(),
+                lessonEntity.getEnabled(),
+                lessonEntity.getAccessCode().toString()
+        );
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -55,13 +56,14 @@ public class EditorLessonService {
         lessonEntity.setBody(lessonDto.body());
         lessonEntity.setEnabled(lessonDto.enabled());
         lessonRepository.save(lessonEntity);
-        LessonDto.Response.BaseResponse response = LessonDto.Response.BaseResponse.builder()
-                .id(lessonEntity.getId())
-                .title(lessonEntity.getTitle())
-                .description(lessonEntity.getDescription())
-                .body(lessonEntity.getBody())
-                .enabled(lessonEntity.getEnabled())
-                .build();
+        LessonDto.Response.BaseResponse response = new LessonDto.Response.BaseResponse(
+                lessonEntity.getId(),
+                lessonEntity.getTitle(),
+                lessonEntity.getDescription(),
+                lessonEntity.getBody(),
+                lessonEntity.getEnabled(),
+                lessonEntity.getAccessCode().toString()
+        );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -78,13 +80,14 @@ public class EditorLessonService {
         List<LessonDto.Response.BaseResponse> responses = new ArrayList<>();
         for(LessonEntity lessonEntity: lessonEntities){
             responses.add(
-                    LessonDto.Response.BaseResponse.builder()
-                            .id(lessonEntity.getId())
-                            .title(lessonEntity.getTitle())
-                            .description(lessonEntity.getDescription())
-                            .body(lessonEntity.getBody())
-                            .enabled(lessonEntity.getEnabled())
-                            .build()
+                    new LessonDto.Response.BaseResponse(
+                            lessonEntity.getId(),
+                            lessonEntity.getTitle(),
+                            lessonEntity.getDescription(),
+                            lessonEntity.getBody(),
+                            lessonEntity.getEnabled(),
+                            lessonEntity.getAccessCode().toString()
+                    )
             );
         }
         return new ResponseEntity<>(responses, HttpStatus.OK);

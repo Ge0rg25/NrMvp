@@ -20,7 +20,7 @@ public enum AdminDto {;
 
 
     public enum Request{;
-            @Schema(name = "Give Course Access", description = "Dto для выдачи доступа к курсу")
+            @Schema(name = "Request | Give Course Access", description = "Dto для выдачи доступа к курсу")
             public record Give(String userEmail, String courseId) implements UserEmail, CourseId { }
     }
 }
