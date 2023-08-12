@@ -1,5 +1,5 @@
 version: "1.0"
-name: "netrunner_compose"
+name: "netrunner_compose_dev"
 
 services:
   database:
