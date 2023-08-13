@@ -27,11 +27,11 @@ public class LessonEntity {
     @Column(length = 1000)
     String description;
 
-    @Column(length = 7000)
+    @Column(length = 300000)
     String body;
 
     @Column(nullable = false)
-    UUID accessCode;
+    String accessCode;
 
     @Column(nullable = false)
     Boolean enabled;

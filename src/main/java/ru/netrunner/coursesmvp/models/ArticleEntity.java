@@ -23,7 +23,7 @@ public class ArticleEntity {
     @Column(length = 500)
     String description;
 
-    @Column(length = 7000)
+    @Column(length = 300000)
     String body;
 
     @ManyToOne

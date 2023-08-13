@@ -19,7 +19,7 @@ public class LessonService {
     LessonRepository lessonRepository;
 
     public ResponseEntity<?> getLesson(String uuid) {
-        LessonEntity lessonEntity = lessonRepository.findLessonEntityByAccessCode(UUID.fromString(uuid)).orElseThrow(LessonNotExistsError::new);
+        LessonEntity lessonEntity = lessonRepository.findLessonEntityByAccessCode(uuid).orElseThrow(LessonNotExistsError::new);
 
         if (!lessonEntity.getEnabled()) throw new LessonNotExistsError();
 
@@ -29,7 +29,7 @@ public class LessonService {
                 lessonEntity.getDescription(),
                 lessonEntity.getBody(),
                 true,
-                lessonEntity.getAccessCode().toString()
+                lessonEntity.getAccessCode()
         );
         return ResponseEntity.ok(response);
     }

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Repository
 public interface LessonRepository extends JpaRepository<LessonEntity, String> {
-    Optional<LessonEntity> findLessonEntityByAccessCode(UUID accessCode);
+    Optional<LessonEntity> findLessonEntityByAccessCode(String accessCode);
 
     Boolean existsByTitle(String title);
 }

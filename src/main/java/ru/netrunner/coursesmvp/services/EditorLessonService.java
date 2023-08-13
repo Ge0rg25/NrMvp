@@ -34,7 +34,7 @@ public class EditorLessonService {
                 .description(lessonDto.description())
                 .body(lessonDto.body())
                 .enabled(lessonDto.enabled())
-                .accessCode(UUID.randomUUID())
+                .accessCode(UUID.randomUUID().toString())
                 .build();
         lessonRepository.save(lessonEntity);
 
@@ -44,7 +44,7 @@ public class EditorLessonService {
                 lessonEntity.getDescription(),
                 lessonEntity.getBody(),
                 lessonEntity.getEnabled(),
-                lessonEntity.getAccessCode().toString()
+                lessonEntity.getAccessCode()
         );
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -64,7 +64,7 @@ public class EditorLessonService {
                 lessonEntity.getDescription(),
                 lessonEntity.getBody(),
                 lessonEntity.getEnabled(),
-                lessonEntity.getAccessCode().toString()
+                lessonEntity.getAccessCode()
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
