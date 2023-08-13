@@ -45,7 +45,7 @@ public class EditorArticleController {
     }
 
     @Operation(summary = "Удаление статьи из курса")
-    @ApiResponse(responseCode = "200", description = "Article Deleted", content = {@Content})
+    @ApiResponse(responseCode = "200", description = "Article Deleted")
     @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteArticle(@RequestBody ArticleDto.Request.Delete articleDto) {
         return articleService.deleteArticle(articleDto);

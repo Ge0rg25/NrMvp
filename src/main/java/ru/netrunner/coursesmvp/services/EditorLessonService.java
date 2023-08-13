@@ -16,6 +16,7 @@ import ru.netrunner.coursesmvp.repositories.LessonRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -33,6 +34,7 @@ public class EditorLessonService {
                 .description(lessonDto.description())
                 .body(lessonDto.body())
                 .enabled(lessonDto.enabled())
+                .accessCode(UUID.randomUUID())
                 .build();
         lessonRepository.save(lessonEntity);
 

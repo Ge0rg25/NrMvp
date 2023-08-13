@@ -30,7 +30,6 @@ public class LessonEntity {
     @Column(length = 7000)
     String body;
 
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false)
     UUID accessCode;
 

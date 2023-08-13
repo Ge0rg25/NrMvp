@@ -44,8 +44,7 @@ public class EditorLessonController {
     }
 
     @Operation(summary = "удалить урок")
-    @ApiResponse(responseCode = "200", description = "lesson successfully deleted",
-            content = {@Content(schema = @Schema(implementation = LessonDto.Response.BaseResponse.class))})
+    @ApiResponse(responseCode = "200", description = "lesson successfully deleted")
     @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteLesson(@RequestBody LessonDto.Request.Delete LessonDto) {
         return lessonService.deleteLesson(LessonDto);
