@@ -23,6 +23,7 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_ENABLED: true
       KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HOSTNAME_STRICT: false
       SSL_REQUIRED: NONE
     command:
       - start-dev
