@@ -23,9 +23,11 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_ENABLED: true
       KC_HOSTNAME_STRICT_HTTPS: false
+      SSL_REQUIRED: NONE
     command:
       - start-dev
       - --import-realm
+      - -s sslRequired=NONE
     volumes:
       - ./netrunner-realm.json:/opt/keycloak/data/import/netrunner-realm.json
     networks:
