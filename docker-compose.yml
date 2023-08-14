@@ -47,6 +47,13 @@ services:
     networks:
       - backend-network
 
+  frontend:
+    image: ge0rg25/netrunner-frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
 
 networks:
   backend-network:
