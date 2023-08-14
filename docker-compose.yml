@@ -21,11 +21,13 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT_HTTPS: false
     command:
       - start-dev
       - --import-realm
     volumes:
-      - ./realm.json:/opt/keycloak/data/import/realm.json
+      - ./netrunner-realm.json:/opt/keycloak/data/import/netrunner-realm.json
     networks:
       - backend-network
     restart: always
