@@ -51,7 +51,7 @@ services:
   frontend:
     image: ge0rg25/netrunner-frontend:latest
     ports:
-      - "80:80"
+      - "80:8080"
     depends_on:
       - backend
     restart: always
