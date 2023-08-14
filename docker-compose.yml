@@ -12,7 +12,7 @@ services:
       - "5432:5432"
     networks:
       - backend-network
-
+    restart: always
 
   auth:
     image: quay.io/keycloak/keycloak:22.0.1
@@ -28,7 +28,7 @@ services:
       - ./realm.json:/opt/keycloak/data/import/realm.json
     networks:
       - backend-network
-
+    restart: always
 
   backend:
     image: ge0rg25/netrunner-backend:latest
@@ -46,6 +46,7 @@ services:
       KEYCLOAK_PORT: 8080
     networks:
       - backend-network
+    restart: always
 
   frontend:
     image: ge0rg25/netrunner-frontend:latest
@@ -53,6 +54,7 @@ services:
       - "80:80"
     depends_on:
       - backend
+    restart: always
 
 
 networks:
