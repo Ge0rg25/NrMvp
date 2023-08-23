@@ -28,7 +28,7 @@ services:
       POSTGRES_PASSWORD: "postgres"
       KEYCLOAK_SECRET: wKe06lR76VWQUnQXnVjCI4TCgo88nWHU
       KEYCLOAK_HOST: localhost
-      KEYCLOAK_PORT: 8080
+      KEYCLOAK_PORT: 8081
     networks:
       - backend-network
     restart: always
