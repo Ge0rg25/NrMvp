@@ -19,8 +19,6 @@ services:
       - "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
     volumes:
       - ./realms:/opt/keycloak/data/import
-    networks:
-      - backend-network
 
     restart: always
 
