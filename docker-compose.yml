@@ -47,7 +47,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
-      KEYCLOAK_SECRET: "wKe06lR76VWQUnQXnVjCI4TCgo88nWHU"
+      KEYCLOAK_SECRET: "**********"
       KEYCLOAK_HOST: auth
       KEYCLOAK_PORT: 8080
     networks:
