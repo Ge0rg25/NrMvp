@@ -78,16 +78,12 @@ public class KeycloakUtils {
 
     public String getUserIdByEmail(String email) {
         try {
-            log.info("Searching by email: {} (exact {})", email, true);
-
             List<UserRepresentation> users = keycloak.realm(realm)
                     .users()
                     .searchByEmail(email, true);
-
-            log.warn(users.get(0).getId());
             return users.get(0).getId();
         } catch (RuntimeException exception) {
-            // TODO: create and throw user not exists exteption
+            log.error(exception.getMessage());
         }
         return "";
     }

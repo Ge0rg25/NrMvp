@@ -35,7 +35,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/admin/**").hasRole("admin")
                         .requestMatchers("/editor/**").hasAnyRole("editor", "admin")
-                        .requestMatchers("/course/**").authenticated()
+                        .requestMatchers("/courses/**").authenticated()
                         .requestMatchers("/user/**").authenticated()
                         .anyRequest().permitAll()
                 ).oauth2ResourceServer(oauth2 -> oauth2

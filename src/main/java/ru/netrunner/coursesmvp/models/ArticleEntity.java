@@ -27,8 +27,8 @@ public class ArticleEntity {
     String body;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    CourseEntity course;
+    @JoinColumn(name = "module_id")
+    ModuleEntity module;
 
 
     public ArticleEntity() {

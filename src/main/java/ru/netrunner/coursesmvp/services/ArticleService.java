@@ -13,8 +13,10 @@ import ru.netrunner.coursesmvp.errors.common.ArticleNotExistsError;
 import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
 import ru.netrunner.coursesmvp.models.ArticleEntity;
 import ru.netrunner.coursesmvp.models.CourseEntity;
+import ru.netrunner.coursesmvp.models.ModuleEntity;
 import ru.netrunner.coursesmvp.repositories.ArticleRepository;
 import ru.netrunner.coursesmvp.repositories.CourseRepository;
+import ru.netrunner.coursesmvp.repositories.ModuleRepository;
 
 import java.util.*;
 
@@ -24,13 +26,12 @@ import java.util.*;
 public class ArticleService {
 
     ArticleRepository articleRepository;
-    CourseRepository courseRepository;
-
+    ModuleRepository moduleRepository;
 
     @Transactional
     public ResponseEntity<?> createArticle(ArticleDto.Request.Create articleDto) {
-        CourseEntity courseEntity = courseRepository.findById(articleDto.courseId()).orElseThrow(CourseNotExistsError::new);
-        if (articleRepository.existsByCourseAndTitle(courseEntity, articleDto.title())) {
+        ModuleEntity moduleEntity = moduleRepository.findById(articleDto.moduleId()).orElseThrow(CourseNotExistsError::new);
+        if (articleRepository.existsByModuleAndTitle(moduleEntity, articleDto.title())) {
             throw new ArticleAlreadyExistsError();
         }
         ArticleEntity articleEntity = ArticleEntity.builder()
@@ -38,7 +39,7 @@ public class ArticleService {
                 .description(articleDto.description())
                 .body(articleDto.body())
                 .build();
-        articleEntity.setCourse(courseEntity);
+        articleEntity.setModule(moduleEntity);
         articleRepository.save(articleEntity);
         ArticleDto.Response.BaseResponse responseDto = new ArticleDto.Response.BaseResponse(
                 articleEntity.getTitle(),
@@ -76,9 +77,9 @@ public class ArticleService {
         return new ResponseEntity<>(Map.of("status", "success"), HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getAllByCourseId(ArticleDto.Request.FindAll articleDto) {
-        CourseEntity courseEntity = courseRepository.findById(articleDto.courseId()).orElseThrow(CourseNotExistsError::new);
-        List<ArticleEntity> articleEntities = courseEntity.getArticles();
+    public ResponseEntity<?> getAllByModuleId(ArticleDto.Request.FindAll articleDto) {
+        ModuleEntity moduleEntity = moduleRepository.findById(articleDto.moduleId()).orElseThrow(CourseNotExistsError::new);
+        List<ArticleEntity> articleEntities = moduleEntity.getArticles();
         List<ArticleDto.Response.BaseResponse> response = new ArrayList<>();
 
         for (ArticleEntity articleEntity : articleEntities) {

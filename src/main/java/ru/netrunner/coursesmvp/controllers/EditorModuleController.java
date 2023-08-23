@@ -15,48 +15,47 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.netrunner.coursesmvp.dto.CourseDto;
 import ru.netrunner.coursesmvp.dto.ModuleDto;
-import ru.netrunner.coursesmvp.services.CourseService;
+import ru.netrunner.coursesmvp.services.ModuleService;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-@RequestMapping("/editor/courses")
-@Tag(name = "Requests For Edit Courses")
-public class EditorCourseController {
+@RequestMapping("/editor/modules")
+@Tag(name = "Requests For Edit Modules")
+public class EditorModuleController {
 
-    CourseService courseService;
+    ModuleService moduleService;
 
-    @Operation(summary = "Создание курса")
-    @ApiResponse(responseCode = "200", description = "course successfully created",
+    @Operation(summary = "Создание модуля")
+    @ApiResponse(responseCode = "200", description = "module successfully created",
             content = {@Content(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createCourse(@RequestBody CourseDto.Request.Create courseDto) {
-        return courseService.createCourse(courseDto);
+    public ResponseEntity<?> createModule(@RequestBody ModuleDto.Request.Create moduleDto) {
+        return moduleService.createModule(moduleDto);
     }
 
-    @Operation(summary = "Обновление курса")
-    @ApiResponse(responseCode = "200", description = "course successfully updated",
+    @Operation(summary = "Обновление модуля")
+    @ApiResponse(responseCode = "200", description = "module successfully updated",
             content = {@Content(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateCourse(@RequestBody CourseDto.Request.Update courseDto) {
-        return courseService.updateCourse(courseDto);
+    public ResponseEntity<?> updateModule(@RequestBody ModuleDto.Request.Update moduleDto) {
+        return moduleService.updateModule(moduleDto);
     }
 
-    @Operation(summary = "Удаление курса")
-    @ApiResponse(responseCode = "200", description = "course successfully deleted")
+    @Operation(summary = "Удаление модуля")
+    @ApiResponse(responseCode = "200", description = "module successfully deleted")
     @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteCourse(@RequestBody CourseDto.Request.Delete courseDto) {
-        return courseService.deleteCourse(courseDto);
+    public ResponseEntity<?> deleteModule(@RequestBody ModuleDto.Request.Delete moduleDto) {
+        return moduleService.deleteModule(moduleDto);
     }
 
-    @Operation(summary = "получение всех курсов")
-    @ApiResponse(responseCode = "200", description = "list of courses",
+    @Operation(summary = "получение всех модулей")
+    @ApiResponse(responseCode = "200", description = "list of modules",
             content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/get/all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllCourses(){
-        return courseService.getAllCourses();
+    public ResponseEntity<?> getAllModule(@RequestBody ModuleDto.Request.GetAll moduleDto){
+        return moduleService.getAllModules(moduleDto);
     }
 
 }

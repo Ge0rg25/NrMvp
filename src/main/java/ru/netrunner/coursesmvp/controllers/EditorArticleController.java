@@ -55,7 +55,7 @@ public class EditorArticleController {
     @ApiResponse(responseCode = "200", description = "Article Updated", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/find/by/course", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAllByCourse(@RequestBody ArticleDto.Request.FindAll articleDto) {
-        return articleService.getAllByCourseId(articleDto);
+        return articleService.getAllByModuleId(articleDto);
     }
 
 }

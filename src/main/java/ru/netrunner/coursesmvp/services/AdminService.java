@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.AdminDto;
+import ru.netrunner.coursesmvp.errors.common.UserNotExistsException;
 import ru.netrunner.coursesmvp.keycloak.KeycloakUtils;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.models.UserEntity;
@@ -28,7 +29,8 @@ public class AdminService {
 
     public ResponseEntity<?> giveCourse(AdminDto.Request.Give adminDto){
         CourseEntity courseEntity = courseRepository.findById(adminDto.courseId()).orElseThrow(RuntimeException::new);
-        UserEntity userEntity = userRepository.findById(keycloakUtils.getUserIdByEmail(adminDto.userEmail())).orElseThrow(RuntimeException::new);
+        log.warn(keycloakUtils.getUserIdByEmail(adminDto.userEmail()));
+        UserEntity userEntity = userRepository.findById(keycloakUtils.getUserIdByEmail(adminDto.userEmail())).orElseThrow(UserNotExistsException::new);
         List<UserEntity> courseUsers = courseEntity.getUsers();
         courseUsers.add(userEntity);
         courseEntity.setUsers(courseUsers);

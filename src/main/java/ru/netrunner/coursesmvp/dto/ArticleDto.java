@@ -31,17 +31,17 @@ public class ArticleDto {
         String body();
     }
 
-    private interface CourseId {
+    private interface ModuleId {
         @Schema(description = "id курса в котором находится статья")
-        @JsonProperty("course_id")
-        String courseId();
+        @JsonProperty("module_id")
+        String moduleId();
     }
 
 
     public static class Request {
 
         @Schema(name = "Request | Create Article Dto", description = "Dto для создания статьи")
-        public record Create(@NotBlank String title, String description, @NotBlank String body, String courseId) implements Title, Description, Body, CourseId {
+        public record Create(@NotBlank String title, String description, @NotBlank String body, String moduleId) implements Title, Description, Body, ModuleId {
         }
 
         @Schema(name = "Request | Update Article Dto", description = "Dto для обновления статьи")
@@ -53,7 +53,7 @@ public class ArticleDto {
         }
 
         @Schema(name = "Request | Find All Article Dto", description = "Dto для получения всех статей курса")
-        public record FindAll(@NotBlank String courseId) implements CourseId {
+        public record FindAll(@NotBlank String moduleId) implements ModuleId {
         }
     }
 

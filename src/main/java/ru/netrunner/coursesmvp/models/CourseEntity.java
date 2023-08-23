@@ -2,8 +2,7 @@ package ru.netrunner.coursesmvp.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
@@ -13,6 +12,9 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "courses")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CourseEntity {
 
     @Id
@@ -26,13 +28,15 @@ public class CourseEntity {
     String description;
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<ArticleEntity> articles;
+    List<ModuleEntity> modules = new ArrayList<>();
 
 
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
+    @Builder.Default
     @JoinTable(
             name = "course_user",
             joinColumns = @JoinColumn(name = "course_id"),

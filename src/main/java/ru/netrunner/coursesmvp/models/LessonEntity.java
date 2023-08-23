@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.UUID;
-
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)

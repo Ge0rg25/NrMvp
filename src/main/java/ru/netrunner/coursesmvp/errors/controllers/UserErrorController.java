@@ -17,7 +17,7 @@ public class UserErrorController {
 
     @ExceptionHandler(value = {UserNotExistsException.class})
     public ResponseEntity<?> courseAlreadyExists(RuntimeException exception, WebRequest webRequest){
-        return ErrorUtils.genereateErrorResponse("user not exists", HttpStatus.CONFLICT);
+        return ErrorUtils.genereateErrorResponse("user not exists", HttpStatus.NOT_FOUND);
     }
 
 }

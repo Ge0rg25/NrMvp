@@ -1,18 +1,8 @@
-version: "1.0"
-name: "netrunner_compose_dev"
+version: "3.8"
+name: "netrunner_compose"
+
 
 services:
-  database:
-    image: postgres:14
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    ports:
-      - 5432:5432
-    networks:
-      - backend-network
-
-
   auth:
     image: quay.io/keycloak/keycloak:22.0.1
     ports:
@@ -34,5 +24,3 @@ services:
 
     restart: always
 
-networks:
-  backend-network:
