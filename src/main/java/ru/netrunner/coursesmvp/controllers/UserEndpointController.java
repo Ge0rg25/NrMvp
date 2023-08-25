@@ -16,7 +16,7 @@ import ru.netrunner.coursesmvp.services.UserService;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@RequestMapping("/user/")
+@RequestMapping("/user")
 @Tag(name = "User Endpoint", description = "Эндпоинт для синхронизации пользователей")
 public class UserEndpointController {
 

@@ -4,6 +4,7 @@ package ru.netrunner.coursesmvp.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 
@@ -16,6 +17,8 @@ public class ModuleDto {
     private interface Title {
         @Schema(description = "Заголовок модуля")
         @Length(max = 50)
+        @NotNull
+        @NotBlank
         String title();
     }
     private interface Description {

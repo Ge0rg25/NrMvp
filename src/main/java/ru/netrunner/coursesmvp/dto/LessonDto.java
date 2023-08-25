@@ -13,6 +13,8 @@ public class LessonDto{
     }
     private interface Title {
         @Schema(description = "Заголовок урока")
+        @NotNull
+        @NotBlank
         String title();
     }
     private interface Description{

@@ -3,6 +3,7 @@ package ru.netrunner.coursesmvp.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 
@@ -14,6 +15,8 @@ public class CourseDto {
     private interface Title {
         @Schema(description = "Заголовок курса")
         @Length(max = 50)
+        @NotBlank
+        @NotNull
         String title();
     }
     private interface Description {

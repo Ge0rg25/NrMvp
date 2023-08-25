@@ -102,6 +102,6 @@ public class UserService {
             userEntity.setId(id);
             userRepository.save(userEntity);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok("Ассинхронщина для лохов");
     }
 }
