@@ -3,6 +3,7 @@ package ru.netrunner.coursesmvp.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 
@@ -55,6 +56,9 @@ public class ArticleDto {
         @Schema(name = "Request | Find All Article Dto", description = "Dto для получения всех статей курса")
         public record FindAll(@NotBlank String moduleId) implements ModuleId {
         }
+
+        @Schema(name = "Request | Get By Id And ModuleId" , description = "Dto для получения статьи")
+        public record GetByModule(@NotBlank @NotNull String id, @NotBlank @NotNull String moduleId) implements Id, ModuleId{}
     }
 
     public static class Response {

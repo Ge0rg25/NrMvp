@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.ArticleDto;
 import ru.netrunner.coursesmvp.dto.ModuleDto;
 import ru.netrunner.coursesmvp.dto.CourseDto;
+import ru.netrunner.coursesmvp.errors.common.ArticleNotExistsError;
 import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
+import ru.netrunner.coursesmvp.errors.common.ModuleNotExistsError;
 import ru.netrunner.coursesmvp.errors.common.UserNotExistsException;
 import ru.netrunner.coursesmvp.models.ArticleEntity;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.models.ModuleEntity;
 import ru.netrunner.coursesmvp.models.UserEntity;
+import ru.netrunner.coursesmvp.repositories.ArticleRepository;
 import ru.netrunner.coursesmvp.repositories.CourseRepository;
 import ru.netrunner.coursesmvp.repositories.ModuleRepository;
 import ru.netrunner.coursesmvp.repositories.UserRepository;
@@ -31,6 +34,7 @@ public class UserService {
     UserRepository userRepository;
     CourseRepository courseRepository;
     ModuleRepository moduleRepository;
+    ArticleRepository articleRepository;
 
     public ResponseEntity<?> getUserCourses(String userId) {
         UserEntity user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
@@ -78,7 +82,7 @@ public class UserService {
     }
 
     public ResponseEntity<?> getArticles(CourseDto.Request.Get courseDto) {
-        ModuleEntity moduleEntity = moduleRepository.findById(courseDto.id()).orElseThrow(CourseNotExistsError::new);
+        ModuleEntity moduleEntity = moduleRepository.findById(courseDto.id()).orElseThrow(ModuleNotExistsError::new);
         List<ArticleDto.Response.BaseResponse> response = new ArrayList<>();
         for (ArticleEntity articleEntity : moduleEntity.getArticles()) {
             response.add(
@@ -94,6 +98,17 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
+    public ResponseEntity<?> getArticleByIdAndModule(ArticleDto.Request.GetByModule dto){
+        ModuleEntity moduleEntity = moduleRepository.findById(dto.moduleId()).orElseThrow(ModuleNotExistsError::new);
+        ArticleEntity articleEntity = articleRepository.findByIdAndModule(dto.id(), moduleEntity).orElseThrow(ArticleNotExistsError::new);
+        ArticleDto.Response.BaseResponse response = new ArticleDto.Response.BaseResponse(
+                articleEntity.getTitle(),
+                articleEntity.getDescription(),
+                articleEntity.getBody(),
+                articleEntity.getId()
+        );
+        return ResponseEntity.ok(response);
+    }
 
     @Transactional
     public ResponseEntity<?> userSetup(String id) {

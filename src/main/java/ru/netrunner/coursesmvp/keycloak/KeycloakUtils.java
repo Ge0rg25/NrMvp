@@ -83,7 +83,8 @@ public class KeycloakUtils {
                     .searchByEmail(email, true);
             return users.get(0).getId();
         } catch (RuntimeException exception) {
-            log.error(exception.getMessage());
+            log.error(clientSecret + " || keycloak client secret");
+            log.error(exception.getMessage() + " || error message");
         }
         return "";
     }
