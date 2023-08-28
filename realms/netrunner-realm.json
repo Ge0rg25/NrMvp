@@ -913,7 +913,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "15TiSXvA1c39djCxCueLdHYOwVCTH86b",
       "redirectUris": [
         "/*"
       ],

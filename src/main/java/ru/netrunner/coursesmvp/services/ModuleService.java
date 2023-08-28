@@ -9,8 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.ModuleDto;
-import ru.netrunner.coursesmvp.errors.common.CourseAlreadyExistsError;
 import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
+import ru.netrunner.coursesmvp.errors.common.ModuleAlreadyExistsError;
+import ru.netrunner.coursesmvp.errors.common.ModuleNotExistsError;
 import ru.netrunner.coursesmvp.models.CourseEntity;
 import ru.netrunner.coursesmvp.models.ModuleEntity;
 import ru.netrunner.coursesmvp.repositories.CourseRepository;
@@ -31,10 +32,10 @@ public class ModuleService {
 
     @Transactional
     public ResponseEntity<?> createModule(ModuleDto.Request.Create moduleDto) {
-        if (moduleRepository.existsByTitle(moduleDto.title())) {
-            throw new CourseAlreadyExistsError();
-        }
         CourseEntity moduleCourse = courseRepository.findById(moduleDto.courseId()).orElseThrow(CourseNotExistsError::new);
+        if (moduleRepository.existsByTitle(moduleDto.title()) && moduleRepository.existsByCourse(moduleCourse)) {
+            throw new ModuleAlreadyExistsError();
+        }
         ModuleEntity moduleEntity = ModuleEntity.builder()
                 .title(moduleDto.title())
                 .description(moduleDto.description())
@@ -52,7 +53,7 @@ public class ModuleService {
 
     @Transactional
     public ResponseEntity<?> updateModule(ModuleDto.Request.Update moduleDto) {
-        ModuleEntity moduleEntity = moduleRepository.findById(moduleDto.id()).orElseThrow(CourseNotExistsError::new);
+        ModuleEntity moduleEntity = moduleRepository.findById(moduleDto.id()).orElseThrow(ModuleNotExistsError::new);
         moduleEntity.setTitle(moduleDto.title());
         moduleEntity.setDescription(moduleDto.description());
         moduleRepository.save(moduleEntity);
@@ -66,7 +67,7 @@ public class ModuleService {
 
     @Transactional
     public ResponseEntity<?> deleteModule(ModuleDto.Request.Delete moduleDto) {
-        ModuleEntity moduleEntity = moduleRepository.findById(moduleDto.id()).orElseThrow(CourseNotExistsError::new);
+        ModuleEntity moduleEntity = moduleRepository.findById(moduleDto.id()).orElseThrow(ModuleNotExistsError::new);
         moduleRepository.delete(moduleEntity);
         return ResponseEntity.ok(Map.of("status", "success"));
     }

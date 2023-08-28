@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class EditorLessonController {
     @ApiResponse(responseCode = "200", description = "lesson successfully created",
             content = {@Content(schema = @Schema(implementation = LessonDto.Response.BaseResponse.class))})
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createLesson(@RequestBody LessonDto.Request.Create LessonDto) {
+    public ResponseEntity<?> createLesson(@Validated @RequestBody LessonDto.Request.Create LessonDto) {
         return lessonService.createLesson(LessonDto);
     }
 
@@ -39,14 +40,14 @@ public class EditorLessonController {
     @ApiResponse(responseCode = "200", description = "lesson successfully updated",
             content = {@Content(schema = @Schema(implementation = LessonDto.Response.BaseResponse.class))})
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateLesson(@RequestBody LessonDto.Request.Update LessonDto) {
+    public ResponseEntity<?> updateLesson(@Validated @RequestBody LessonDto.Request.Update LessonDto) {
         return lessonService.updateLesson(LessonDto);
     }
 
     @Operation(summary = "удалить урок")
     @ApiResponse(responseCode = "200", description = "lesson successfully deleted")
     @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteLesson(@RequestBody LessonDto.Request.Delete LessonDto) {
+    public ResponseEntity<?> deleteLesson(@Validated @RequestBody LessonDto.Request.Delete LessonDto) {
         return lessonService.deleteLesson(LessonDto);
     }
 

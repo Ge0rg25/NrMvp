@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class EditorModuleController {
     @ApiResponse(responseCode = "200", description = "module successfully created",
             content = {@Content(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createModule(@RequestBody ModuleDto.Request.Create moduleDto) {
+    public ResponseEntity<?> createModule(@Validated @RequestBody ModuleDto.Request.Create moduleDto) {
         return moduleService.createModule(moduleDto);
     }
 
@@ -39,14 +40,14 @@ public class EditorModuleController {
     @ApiResponse(responseCode = "200", description = "module successfully updated",
             content = {@Content(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateModule(@RequestBody ModuleDto.Request.Update moduleDto) {
+    public ResponseEntity<?> updateModule(@Validated @RequestBody ModuleDto.Request.Update moduleDto) {
         return moduleService.updateModule(moduleDto);
     }
 
     @Operation(summary = "Удаление модуля")
     @ApiResponse(responseCode = "200", description = "module successfully deleted")
     @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteModule(@RequestBody ModuleDto.Request.Delete moduleDto) {
+    public ResponseEntity<?> deleteModule(@Validated @RequestBody ModuleDto.Request.Delete moduleDto) {
         return moduleService.deleteModule(moduleDto);
     }
 
@@ -54,7 +55,7 @@ public class EditorModuleController {
     @ApiResponse(responseCode = "200", description = "list of modules",
             content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/get/all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllModule(@RequestBody ModuleDto.Request.GetAll moduleDto){
+    public ResponseEntity<?> getAllModule(@Validated @RequestBody ModuleDto.Request.GetAll moduleDto){
         return moduleService.getAllModules(moduleDto);
     }
 

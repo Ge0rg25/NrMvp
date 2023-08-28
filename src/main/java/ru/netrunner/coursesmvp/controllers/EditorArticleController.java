@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,28 +34,28 @@ public class EditorArticleController {
     @ApiResponse(responseCode = "200", description = "Article Created",
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createArticle(@RequestBody ArticleDto.Request.Create articleDto) {
+    public ResponseEntity<?> createArticle(@Validated @RequestBody ArticleDto.Request.Create articleDto) {
         return articleService.createArticle(articleDto);
     }
 
     @Operation(summary = "Обновление статьи в курсе")
     @ApiResponse(responseCode = "200", description = "Article Updated", content = {@Content(schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateArticle(@RequestBody ArticleDto.Request.Update articleDto) {
+    public ResponseEntity<?> updateArticle(@Validated @RequestBody ArticleDto.Request.Update articleDto) {
         return articleService.updateArticle(articleDto);
     }
 
     @Operation(summary = "Удаление статьи из курса")
     @ApiResponse(responseCode = "200", description = "Article Deleted")
     @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteArticle(@RequestBody ArticleDto.Request.Delete articleDto) {
+    public ResponseEntity<?> deleteArticle(@Validated @RequestBody ArticleDto.Request.Delete articleDto) {
         return articleService.deleteArticle(articleDto);
     }
 
     @Operation(summary = "Получение всех статей по id курса")
     @ApiResponse(responseCode = "200", description = "Article Updated", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/find/by/course", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findAllByCourse(@RequestBody ArticleDto.Request.FindAll articleDto) {
+    public ResponseEntity<?> findAllByCourse(@Validated @RequestBody ArticleDto.Request.FindAll articleDto) {
         return articleService.getAllByModuleId(articleDto);
     }
 

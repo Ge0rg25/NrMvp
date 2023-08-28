@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.netrunner.coursesmvp.dto.ArticleDto;
 import ru.netrunner.coursesmvp.dto.ModuleDto;
@@ -40,7 +41,7 @@ public class UserCourseController {
     @ApiResponse(responseCode = "200", description = "course",
             content = {@Content(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/get", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getCourse(@AuthenticationPrincipal Jwt jwt, @RequestBody ModuleDto.Request.Get courseDto) {
+    public ResponseEntity<?> getCourse(@AuthenticationPrincipal Jwt jwt, @Validated @RequestBody ModuleDto.Request.Get courseDto) {
         return userService.getCourse(jwt.getSubject(), courseDto);
     }
 
@@ -48,7 +49,7 @@ public class UserCourseController {
     @ApiResponse(responseCode = "200", description = "modules",
             content = {@Content(array = @ArraySchema(schema = @Schema(implementation = CourseDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/get/modules", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getModules(@RequestBody CourseDto.Request.Get courseDto) {
+    public ResponseEntity<?> getModules(@Validated @RequestBody CourseDto.Request.Get courseDto) {
         return userService.getModules(courseDto);
     }
 
@@ -57,7 +58,7 @@ public class UserCourseController {
     @ApiResponse(responseCode = "200", description = "articles",
             content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/get/articles", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getArticles(@RequestBody CourseDto.Request.Get courseDto) {
+    public ResponseEntity<?> getArticles(@Validated @RequestBody CourseDto.Request.Get courseDto) {
         return userService.getArticles(courseDto);
     }
 
