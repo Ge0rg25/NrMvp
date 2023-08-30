@@ -14,6 +14,5 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, String> 
 
     Boolean existsByModuleAndTitle(ModuleEntity course, String title);
 
-    Optional<ArticleEntity> findByIdAndModule(String id, ModuleEntity moduleEntity);
 
 }

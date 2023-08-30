@@ -62,12 +62,12 @@ public class UserCourseController {
         return userService.getArticles(courseDto);
     }
 
-    @Operation(summary = "Получение статьи по id статьи и id модуля")
+    @Operation(summary = "Получение статьи по id")
     @ApiResponse(responseCode = "200", description = "article",
-            content = {@Content(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class))})
+            content = {@Content(schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/get/article", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getArticle(@Validated @RequestBody ArticleDto.Request.GetByModule courseDto) {
-        return userService.getArticleByIdAndModule(courseDto);
+        return userService.getArticleById(courseDto);
     }
 
 }

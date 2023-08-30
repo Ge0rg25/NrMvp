@@ -98,9 +98,8 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getArticleByIdAndModule(ArticleDto.Request.GetByModule dto){
-        ModuleEntity moduleEntity = moduleRepository.findById(dto.moduleId()).orElseThrow(ModuleNotExistsError::new);
-        ArticleEntity articleEntity = articleRepository.findByIdAndModule(dto.id(), moduleEntity).orElseThrow(ArticleNotExistsError::new);
+    public ResponseEntity<?> getArticleById(ArticleDto.Request.GetByModule dto){
+        ArticleEntity articleEntity = articleRepository.findById(dto.id()).orElseThrow(ArticleNotExistsError::new);
         ArticleDto.Response.BaseResponse response = new ArticleDto.Response.BaseResponse(
                 articleEntity.getTitle(),
                 articleEntity.getDescription(),

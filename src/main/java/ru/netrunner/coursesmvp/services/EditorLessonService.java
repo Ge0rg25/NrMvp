@@ -88,7 +88,7 @@ public class EditorLessonService {
                             lessonEntity.getDescription(),
                             lessonEntity.getBody(),
                             lessonEntity.getEnabled(),
-                            lessonEntity.getAccessCode().toString()
+                            lessonEntity.getAccessCode()
                     )
             );
         }

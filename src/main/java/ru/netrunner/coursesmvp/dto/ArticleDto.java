@@ -58,7 +58,7 @@ public class ArticleDto {
         }
 
         @Schema(name = "Request | Get By Id And ModuleId" , description = "Dto для получения статьи")
-        public record GetByModule(@NotBlank @NotNull String id, @NotBlank @NotNull String moduleId) implements Id, ModuleId{}
+        public record GetByModule(@NotBlank @NotNull String id) implements Id{}
     }
 
     public static class Response {
