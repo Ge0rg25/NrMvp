@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import ru.netrunner.coursesmvp.errors.common.LessonAlreadyExistsError;
 import ru.netrunner.coursesmvp.errors.common.LessonNotExistsError;
+import ru.netrunner.coursesmvp.errors.common.UserAlreadyHaveCourse;
 import ru.netrunner.coursesmvp.errors.common.UserNotExistsException;
 import ru.netrunner.coursesmvp.utils.ErrorUtils;
 
@@ -18,6 +19,12 @@ public class UserErrorController {
     @ExceptionHandler(value = {UserNotExistsException.class})
     public ResponseEntity<?> courseAlreadyExists(RuntimeException exception, WebRequest webRequest){
         return ErrorUtils.genereateErrorResponse("user not exists", HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(value = {UserAlreadyHaveCourse.class})
+    public ResponseEntity<?> userAlreadyHaveCourse(RuntimeException exception, WebRequest webRequest){
+        return ErrorUtils.genereateErrorResponse("user already have this course", HttpStatus.CONFLICT);
     }
 
 }
