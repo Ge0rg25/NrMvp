@@ -40,6 +40,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation "org.keycloak:keycloak-admin-client:${keycloakVersion}" // адаптер для работы с KC
     implementation 'org.modelmapper:modelmapper:3.1.1'
+    implementation 'org.apache.tika:tika-core:2.9.0'
 
 }
 
