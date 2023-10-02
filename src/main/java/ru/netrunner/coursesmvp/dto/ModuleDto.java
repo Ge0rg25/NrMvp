@@ -16,7 +16,7 @@ public class ModuleDto {
     }
     private interface Title {
         @Schema(description = "Заголовок модуля")
-        @Length(max = 50)
+        @Length(max = 300)
         @NotNull
         @NotBlank
         String title();

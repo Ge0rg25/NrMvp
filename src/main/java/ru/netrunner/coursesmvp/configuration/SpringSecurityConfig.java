@@ -37,6 +37,7 @@ public class SpringSecurityConfig {
                         .requestMatchers("/editor/**").hasAnyRole("editor", "admin")
                         .requestMatchers("/courses/**").authenticated()
                         .requestMatchers("/user/**").authenticated()
+                        .requestMatchers("/photos/upload").hasAnyRole("editor", "admin")
                         .anyRequest().permitAll()
                 ).oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt

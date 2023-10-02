@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.netrunner.coursesmvp.dto.LessonDto;
+import ru.netrunner.coursesmvp.repositories.CourseRepository;
 import ru.netrunner.coursesmvp.services.EditorLessonService;
 
 @RestController

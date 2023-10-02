@@ -17,7 +17,7 @@ public class ArticleEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @Column(length = 50)
+    @Column(length = 300)
     String title;
 
     @Column(length = 500)

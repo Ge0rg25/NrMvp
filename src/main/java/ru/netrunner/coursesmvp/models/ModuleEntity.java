@@ -21,7 +21,7 @@ public class ModuleEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @Column(name = "title", length = 50)
+    @Column(name = "title", length = 300)
     String title;
 
     @Column(name = "description")

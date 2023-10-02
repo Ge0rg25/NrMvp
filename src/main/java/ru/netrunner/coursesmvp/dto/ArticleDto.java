@@ -16,7 +16,7 @@ public class ArticleDto {
 
     private interface Title {
         @Schema(description = "заголовок статьи")
-        @Length(max = 50)
+        @Length(max = 300)
         String title();
     }
 
@@ -28,7 +28,7 @@ public class ArticleDto {
 
     private interface Body {
         @Schema(description = "содержание статьи")
-        @Length(max = 7000)
+        @Length(max = 300000)
         String body();
     }
 

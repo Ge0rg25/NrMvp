@@ -14,7 +14,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.netrunner.coursesmvp.dto.ModuleDto;
 import ru.netrunner.coursesmvp.dto.PhotoDto;
 import ru.netrunner.coursesmvp.services.PhotoService;
 
@@ -31,7 +30,7 @@ public class PhotoController {
 
     @ApiResponse(responseCode = "200", description = "file succsesful uploaded",
             content = {@Content(schema = @Schema(implementation = PhotoDto.Response.BaseResponse.class))})
-    @PostMapping(value = "/upload")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> upload(@ModelAttribute PhotoDto.Request.Upload dto) throws MimeTypeException, IOException {
         return photoService.upload(dto);
 
@@ -39,7 +38,7 @@ public class PhotoController {
 
     @ApiResponse(responseCode = "200", description = "file succsesful uploaded",
             content = {@Content(schema = @Schema(implementation = Resource.class))})
-    @GetMapping("/download")
+    @GetMapping(value = "/download")
     public ResponseEntity<?> download(@ModelAttribute PhotoDto.Request.Download dto) throws IOException {
         return photoService.download(dto);
     }
