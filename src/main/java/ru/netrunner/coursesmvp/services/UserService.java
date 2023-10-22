@@ -4,8 +4,12 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.catalina.User;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.ArticleDto;
 import ru.netrunner.coursesmvp.dto.ModuleDto;
@@ -36,8 +40,8 @@ public class UserService {
     ModuleRepository moduleRepository;
     ArticleRepository articleRepository;
 
-    public ResponseEntity<?> getUserCourses(String userId) {
-        UserEntity user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
+    public ResponseEntity<?> getUserCourses(Jwt jwt) {
+        UserEntity user = userRepository.findById(jwt.getSubject()).orElseThrow(UserNotExistsException::new);
         List<CourseEntity> courseList = user.getCourses();
         List<ModuleDto.Response.BaseResponse> response = new ArrayList<>();
         for (CourseEntity courseEntity : courseList)
@@ -51,13 +55,16 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getCourse(String userId, ModuleDto.Request.Get courseDto) {
-        UserEntity user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
+    public ResponseEntity<?> getCourse(Jwt jwt, ModuleDto.Request.Get courseDto) {
+        UserEntity user = userRepository.findById(jwt.getSubject()).orElseThrow(UserNotExistsException::new);
         List<CourseEntity> courseList = user.getCourses();
         CourseEntity findedCourse = courseList.stream().filter(
                         courseEntity -> courseEntity.getId().equals(courseDto.id())
                 ).findFirst()
                 .orElseThrow(CourseNotExistsError::new);
+        if(!findedCourse.getUsers().contains(user)){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         ModuleDto.Response.BaseResponse response = new ModuleDto.Response.BaseResponse(
                 findedCourse.getId(),
                 findedCourse.getTitle(),
@@ -66,8 +73,12 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getModules(CourseDto.Request.Get courseDto){
+    public ResponseEntity<?> getModules(CourseDto.Request.Get courseDto, Jwt jwt){
+        UserEntity userEntity = userRepository.findById(jwt.getSubject()).orElseThrow(UserNotExistsException::new);
         CourseEntity course = courseRepository.findById(courseDto.id()).orElseThrow(CourseNotExistsError::new);
+        if(!course.getUsers().contains(userEntity)){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         List<CourseDto.Response.BaseResponse> response = new ArrayList<>();
         for (ModuleEntity moduleEntity : course.getModules()) {
             response.add(
@@ -81,8 +92,12 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getArticles(CourseDto.Request.Get courseDto) {
+    public ResponseEntity<?> getArticles(CourseDto.Request.Get courseDto, Jwt jwt) {
         ModuleEntity moduleEntity = moduleRepository.findById(courseDto.id()).orElseThrow(ModuleNotExistsError::new);
+        UserEntity user = userRepository.findById(jwt.getSubject()).orElseThrow(UserNotExistsException::new);
+        if(!moduleEntity.getCourse().getUsers().contains(user)){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         List<ArticleDto.Response.BaseResponse> response = new ArrayList<>();
         for (ArticleEntity articleEntity : moduleEntity.getArticles()) {
             response.add(
@@ -98,8 +113,12 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getArticleById(ArticleDto.Request.GetByModule dto){
+    public ResponseEntity<?> getArticleById(ArticleDto.Request.GetByModule dto, Jwt jwt){
         ArticleEntity articleEntity = articleRepository.findById(dto.id()).orElseThrow(ArticleNotExistsError::new);
+        UserEntity user = userRepository.findById(jwt.getSubject()).orElseThrow(UserNotExistsException::new);
+        if(!articleEntity.getModule().getCourse().getUsers().contains(user)){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         ArticleDto.Response.BaseResponse response = new ArticleDto.Response.BaseResponse(
                 articleEntity.getTitle(),
                 articleEntity.getDescription(),

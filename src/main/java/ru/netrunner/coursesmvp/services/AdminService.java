@@ -1,5 +1,6 @@
 package ru.netrunner.coursesmvp.services;
 
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,6 +29,8 @@ public class AdminService {
     UserRepository userRepository;
     KeycloakUtils keycloakUtils;
 
+
+    @Transactional
     public ResponseEntity<?> giveCourse(AdminDto.Request.Give adminDto){
         CourseEntity courseEntity = courseRepository.findById(adminDto.courseId()).orElseThrow(RuntimeException::new);
         log.warn(keycloakUtils.getUserIdByEmail(adminDto.userEmail()));

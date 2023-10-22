@@ -34,7 +34,7 @@ public class UserCourseController {
             content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/get/all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCourses(@AuthenticationPrincipal Jwt jwt) {
-        return userService.getUserCourses(jwt.getSubject());
+        return userService.getUserCourses(jwt);
     }
 
     @Operation(summary = "Получение курса пользователя по id")
@@ -42,15 +42,15 @@ public class UserCourseController {
             content = {@Content(schema = @Schema(implementation = ModuleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/get", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCourse(@AuthenticationPrincipal Jwt jwt, @Validated @RequestBody ModuleDto.Request.Get courseDto) {
-        return userService.getCourse(jwt.getSubject(), courseDto);
+        return userService.getCourse(jwt, courseDto);
     }
 
     @Operation(summary = "Получение всех модулей")
     @ApiResponse(responseCode = "200", description = "modules",
             content = {@Content(array = @ArraySchema(schema = @Schema(implementation = CourseDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/get/modules", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getModules(@Validated @RequestBody CourseDto.Request.Get courseDto) {
-        return userService.getModules(courseDto);
+    public ResponseEntity<?> getModules(@Validated @RequestBody CourseDto.Request.Get courseDto, @AuthenticationPrincipal Jwt jwt) {
+        return userService.getModules(courseDto, jwt);
     }
 
 
@@ -58,16 +58,16 @@ public class UserCourseController {
     @ApiResponse(responseCode = "200", description = "articles",
             content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class)))})
     @PostMapping(value = "/get/articles", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getArticles(@Validated @RequestBody CourseDto.Request.Get courseDto) {
-        return userService.getArticles(courseDto);
+    public ResponseEntity<?> getArticles(@Validated @RequestBody CourseDto.Request.Get courseDto, @AuthenticationPrincipal Jwt jwt) {
+        return userService.getArticles(courseDto, jwt);
     }
 
     @Operation(summary = "Получение статьи по id")
     @ApiResponse(responseCode = "200", description = "article",
             content = {@Content(schema = @Schema(implementation = ArticleDto.Response.BaseResponse.class))})
     @PostMapping(value = "/get/article", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getArticle(@Validated @RequestBody ArticleDto.Request.GetByModule courseDto) {
-        return userService.getArticleById(courseDto);
+    public ResponseEntity<?> getArticle(@Validated @RequestBody ArticleDto.Request.GetByModule courseDto, @AuthenticationPrincipal Jwt jwt) {
+        return userService.getArticleById(courseDto, jwt);
     }
 
 }

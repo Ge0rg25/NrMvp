@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import ru.netrunner.coursesmvp.dto.ModuleDto;
 import ru.netrunner.coursesmvp.errors.common.CourseNotExistsError;
@@ -74,6 +75,7 @@ public class ModuleService {
 
 
     public ResponseEntity<?> getAllModules(ModuleDto.Request.GetAll moduleDto) {
+
         CourseEntity courseEntity = courseRepository.findById(moduleDto.courseId()).orElseThrow(CourseNotExistsError::new);
         List<ModuleEntity> moduleEntities = courseEntity.getModules();
         List<ModuleDto.Response.BaseResponse> courseDtos = new ArrayList<>();
