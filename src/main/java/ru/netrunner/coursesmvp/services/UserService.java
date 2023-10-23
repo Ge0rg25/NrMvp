@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ import java.util.List;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     UserRepository userRepository;
@@ -62,7 +64,7 @@ public class UserService {
                         courseEntity -> courseEntity.getId().equals(courseDto.id())
                 ).findFirst()
                 .orElseThrow(CourseNotExistsError::new);
-        if(!findedCourse.getUsers().contains(user)){
+        if (!(findedCourse.getUsers().contains(user))) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         ModuleDto.Response.BaseResponse response = new ModuleDto.Response.BaseResponse(
@@ -73,10 +75,12 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getModules(CourseDto.Request.Get courseDto, Jwt jwt){
+    public ResponseEntity<?> getModules(CourseDto.Request.Get courseDto, Jwt jwt) {
         UserEntity userEntity = userRepository.findById(jwt.getSubject()).orElseThrow(UserNotExistsException::new);
         CourseEntity course = courseRepository.findById(courseDto.id()).orElseThrow(CourseNotExistsError::new);
-        if(!course.getUsers().contains(userEntity)){
+        log.warn(userEntity.getId());
+        log.warn(String.valueOf(!(course.getUsers().contains(userEntity))));
+        if (!(course.getUsers().contains(userEntity))) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         List<CourseDto.Response.BaseResponse> response = new ArrayList<>();
@@ -95,7 +99,9 @@ public class UserService {
     public ResponseEntity<?> getArticles(CourseDto.Request.Get courseDto, Jwt jwt) {
         ModuleEntity moduleEntity = moduleRepository.findById(courseDto.id()).orElseThrow(ModuleNotExistsError::new);
         UserEntity user = userRepository.findById(jwt.getSubject()).orElseThrow(UserNotExistsException::new);
-        if(!moduleEntity.getCourse().getUsers().contains(user)){
+        log.warn(user.getId());
+        log.warn(String.valueOf(!(moduleEntity.getCourse().getUsers().contains(user))));
+        if (!(moduleEntity.getCourse().getUsers().contains(user))) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         List<ArticleDto.Response.BaseResponse> response = new ArrayList<>();
@@ -113,10 +119,13 @@ public class UserService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getArticleById(ArticleDto.Request.GetByModule dto, Jwt jwt){
+    public ResponseEntity<?> getArticleById(ArticleDto.Request.GetByModule dto, Jwt jwt) {
         ArticleEntity articleEntity = articleRepository.findById(dto.id()).orElseThrow(ArticleNotExistsError::new);
         UserEntity user = userRepository.findById(jwt.getSubject()).orElseThrow(UserNotExistsException::new);
-        if(!articleEntity.getModule().getCourse().getUsers().contains(user)){
+        log.warn(user.getId());
+        log.warn(String.valueOf(!(articleEntity.getModule().getCourse().getUsers().contains(user))));
+
+        if (!(articleEntity.getModule().getCourse().getUsers().contains(user))) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         ArticleDto.Response.BaseResponse response = new ArticleDto.Response.BaseResponse(
